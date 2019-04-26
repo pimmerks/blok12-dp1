@@ -10,6 +10,12 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
+            // Load text file
+            // Parse text to node mapping
+
+            // Set inputs
+            // Run simulation
+            // Get outputs
         }
     }
 }

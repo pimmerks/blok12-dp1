@@ -7,11 +7,20 @@ namespace Library
 {
     public abstract class Node
     {
-        public List<Node> Inputs { get; set; }
+
+        public System.Collections.Generic.List<Library.Outputt> Inputs { get; set; }
 
         public string Id
         {
             get => default(int);
+            set
+            {
+            }
+        }
+
+        public List<Library.Outputt> Outputt
+        {
+            get => default(Outputt);
             set
             {
             }

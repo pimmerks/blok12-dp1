@@ -8,25 +8,25 @@ namespace Library
     public abstract class Node
     {
 
-        public System.Collections.Generic.List<Library.Outputt> Inputs { get; set; }
+        public System.Collections.Generic.List<Library.Output> Inputs { get; set; }
 
         public string Id
         {
-            get => default(int);
+            get => default(string);
             set
             {
             }
         }
 
-        public List<Library.Outputt> Outputt
+        public List<Library.Output> Output
         {
-            get => default(Outputt);
+            get => default(Output);
             set
             {
             }
         }
 
-        public State GetState()
+        public State Calculate()
         {
             throw new System.NotImplementedException();
         }

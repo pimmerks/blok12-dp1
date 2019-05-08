@@ -51,7 +51,6 @@
     <Compile Include="NodeFactory.cs" />
     <Compile Include="NodeView.cs" />
     <Compile Include="NodeViewFactory.cs" />
-    <Compile Include="Output.cs" />
     <Compile Include="OutputNode.cs" />
     <Compile Include="Outputt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

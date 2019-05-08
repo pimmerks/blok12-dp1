@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Library
 {
-    public class Outputt
+    public class Output
     {
         public State State
         {

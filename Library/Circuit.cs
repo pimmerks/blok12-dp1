@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Library
 {
-    public class Circuit
+    public class Circuit : Node
     {
         public List<Node> InputNodes { get; set; }
 

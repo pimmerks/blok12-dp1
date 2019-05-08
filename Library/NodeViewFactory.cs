@@ -8,4 +8,8 @@ namespace Library
     public class NodeViewFactory
     {
     }
+
+    public class CopyOfNodeViewFactory
+    {
+    }
 }

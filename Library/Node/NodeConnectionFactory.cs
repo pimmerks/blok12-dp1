@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Library
+﻿namespace Library.Node
 {
+    using System.Collections.Generic;
+
     public class NodeConnectionFactory
     {
         public List<Node> CreateNodeConnection(

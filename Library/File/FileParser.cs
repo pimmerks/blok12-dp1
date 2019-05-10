@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Library
+﻿namespace Library.File
 {
+    using System.Collections.Generic;
+    using Node;
+
     public class FileParser
     {
         public List<Node> ParseFile()

@@ -45,6 +45,11 @@
     <Compile Include="Circuit\CircuitFactory.cs" />
     <Compile Include="Node\Nodes\AndNode.cs" />
     <Compile Include="Node\Nodes\InputNode.cs" />
+    <Compile Include="Node\Nodes\NandNode.cs" />
+    <Compile Include="Node\Nodes\NorNode.cs" />
+    <Compile Include="Node\Nodes\NotNode.cs" />
+    <Compile Include="Node\Nodes\OrNode.cs" />
+    <Compile Include="Node\Nodes\XorNode.cs" />
     <Compile Include="Ui\CircuitView.cs" />
     <Compile Include="File\FileParser.cs" />
     <Compile Include="Ui\MainView.cs" />

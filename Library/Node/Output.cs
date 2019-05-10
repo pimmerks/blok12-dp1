@@ -2,8 +2,28 @@
 {
     public class Output
     {
-        public State State { get; set; }
+        public Output(Node node)
+        {
+            this.Node = node;
+        }
 
-        public Node Node { get; set; }
+        public void SetState(State newState)
+        {
+            this.state = newState;
+        }
+
+        public State GetState()
+        {
+            if (this.state == null)
+            {
+                this.Node.Calculate();
+            }
+
+            return this.state;
+        }
+
+        private State state;
+
+        private Node Node { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Node;
 
-    public class CircuitFactory
+    public class CircuitFactory // TODO: Builder
     {
         public Circuit CreateCircuit(List<Node> nodeConnections)
         {

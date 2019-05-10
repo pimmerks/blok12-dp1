@@ -9,7 +9,13 @@
 
         public List<Node> OutputNodes { get; set; }
 
-        public void Calculate()
+        /// <inheritdoc />
+        public Circuit(string id, List<Output> inputs) : base(id, inputs)
+        {
+        }
+
+        /// <inheritdoc />
+        protected override void CalculateCurrentNode()
         {
             throw new System.NotImplementedException();
         }

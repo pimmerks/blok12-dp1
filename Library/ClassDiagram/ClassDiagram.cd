@@ -74,18 +74,18 @@
       <Property Name="NodeConnections" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="DP1.Library.State.State">
-    <Position X="0.5" Y="0.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>State\State.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DP1.Library.Nodes.Circuit">
     <Position X="4" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Nodes\Circuit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DP1.Library.State">
+    <Position X="0.5" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>State.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

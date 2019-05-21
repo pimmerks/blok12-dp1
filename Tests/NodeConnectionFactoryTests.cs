@@ -44,17 +44,13 @@ namespace DP1.Tests
                 "IN2",
                 "OR1"
             };
-            var inputNodes = new List<NodeBase>
-            {
-                nodes.Where(x => x.NodeId == inputs[0]).Single(),
-                nodes.Where(x => x.NodeId == inputs[1]).Single()
-            };
+            List<NodeBase> inputNodes = nodes.Where(x => inputs.Contains(x.NodeId)).ToList();
 
             var nodeConnection = nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "AND1");
 
 
             Assert.IsInstanceOfType(nodeConnection, typeof(NodeConnection));
-            Assert.AreEqual(inputNodes, nodeConnection.InputNodes);
+            CollectionAssert.AreEqual(inputNodes, nodeConnection.InputNodes);
             Assert.AreEqual(nodes.Where(x => x.NodeId == "AND1").Single(), nodeConnection.OutputNode);
         }
 
@@ -66,7 +62,7 @@ namespace DP1.Tests
                 "IN2",
                 "OR1"
             };
-            Assert.ThrowsException<ArgumentException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "UnrecognizedOutput"));
+            Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "UnrecognizedOutput"));
         }
 
         [TestMethod]
@@ -77,7 +73,28 @@ namespace DP1.Tests
                 "AND2",
                 "UnrecognizedInput"
             };
-            Assert.ThrowsException<ArgumentException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "OUT1"));
+            Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "OUT1"));
+        }
+
+        [TestMethod]
+        public void CreateEmptyInputTest()
+        {
+            var inputs = new List<string>
+            {
+            };
+            Assert.ThrowsException<ArgumentNullException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "OUT1"));
+        }
+
+        [TestMethod]
+        public void CreateEmptyNodesTest()
+        {
+            var inputs = new List<string>
+            {
+                "IN2",
+                "OR1"
+            };
+            var emptyNodes = new List<NodeBase>();
+            Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(emptyNodes, inputs, "OUT1"));
         }
     }
 }

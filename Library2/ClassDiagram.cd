@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Library2.NodeBase">
-    <Position X="1" Y="2.75" Width="1.5" />
+    <Position X="0.5" Y="2.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAACAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NodeBase.cs</FileName>
@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Library2.NodeConnection">
-    <Position X="4" Y="3" Width="1.5" />
+    <Position X="4.25" Y="3" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAACAgAAAAAAAA=</HashCode>
       <FileName>NodeConnection.cs</FileName>
@@ -28,7 +28,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Library2.State">
-    <Position X="1" Y="0.75" Width="1.5" />
+    <Position X="0.5" Y="0.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>State.cs</FileName>
@@ -56,21 +56,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Library2.NodeFactory">
-    <Position X="7.25" Y="0.75" Width="1.5" />
+    <Position X="7.25" Y="0.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NodeFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Library2.NodeConnectionFactory">
-    <Position X="7.25" Y="2.25" Width="1.5" />
+    <Position X="7.25" Y="2.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>NodeConnectionFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Library2.NodeSimulation">
-    <Position X="4" Y="0.75" Width="1.5" />
+    <Position X="4.25" Y="0.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>NodeSimulation.cs</FileName>

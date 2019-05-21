@@ -11,7 +11,7 @@
 
         public string NodeId { get; set; }
 
-        public abstract State Calculate(params State[] input);
+        public abstract void Calculate(params State[] input);
 
         public State CurrentState { get; protected set; }
     }

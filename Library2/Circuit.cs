@@ -12,7 +12,7 @@ namespace Library2
         }
 
         /// <inheritdoc />
-        public override State Calculate(params State[] input)
+        public override void Calculate(params State[] input)
         {
             throw new NotImplementedException();
         }

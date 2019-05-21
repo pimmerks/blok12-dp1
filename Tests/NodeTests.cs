@@ -13,17 +13,17 @@ namespace Tests
         {
             var notNode = new NotNode("");
 
-            var newState = notNode.Calculate(new State(false));
+            notNode.Calculate(new State(false));
 
-            Assert.IsTrue(newState.LogicState);
+            Assert.IsTrue(notNode.CurrentState.LogicState);
         }
 
         [TestMethod]
         public void InputNodeTest()
         {
             var inputNode = new InputNode("", new State(true));
-
-            Assert.IsTrue(inputNode.Calculate().LogicState);
+            inputNode.Calculate();
+            Assert.IsTrue(inputNode.CurrentState.LogicState);
         }
     }
 }

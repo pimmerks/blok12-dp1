@@ -14,14 +14,14 @@ namespace Library2
         }
 
         /// <inheritdoc />
-        public override State Calculate(params State[] input)
+        public override void Calculate(params State[] input)
         {
             if (!input.Any() || input.Length != 1)
             {
                 throw new Exception("A NotNode Can only contain 1 input");
             }
 
-            return new State
+            this.CurrentState = new State
             {
                 LogicState = !input[0].LogicState
             };

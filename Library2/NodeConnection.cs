@@ -24,8 +24,10 @@
 
         public State GetResultFromOutputNode()
         {
-            return this.OutputNode.Calculate(
+            this.OutputNode.Calculate(
                 this.InputNodes.Select(x => x.CurrentState).ToArray());
+
+            return OutputNode.CurrentState;
         }
     }
 }

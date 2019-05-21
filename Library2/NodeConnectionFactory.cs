@@ -6,7 +6,8 @@ namespace Library2
 {
     public class NodeConnectionFactory
     {
-        public NodeConnection CreateNodeConnection(List<NodeBase> inputs)
+        public NodeConnection CreateNodeConnection(
+            List<NodeBase> inputs, NodeBase output)
         {
             throw new NotImplementedException();
         }

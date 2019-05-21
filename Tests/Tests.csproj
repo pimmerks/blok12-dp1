@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeConnectionTests.cs" />
+    <Compile Include="NodeFactoryTests.cs" />
     <Compile Include="NodeSimulationTests.cs" />
     <Compile Include="NodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

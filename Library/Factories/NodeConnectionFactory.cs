@@ -8,9 +8,9 @@
     public class NodeConnectionFactory
     {
         public NodeConnection CreateNodeConnection(
-            List<NodeBase> inputs, NodeBase output)
+            List<NodeBase> nodes, List<string> inputs, string output)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

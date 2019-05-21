@@ -8,6 +8,7 @@ using DP1.Library.Factories;
 using DP1.Library.Nodes;
 using DP1.Library.Simulation;
 using DP1.Library;
+using DP1.Library.File;
 
 namespace DP1.Tests
 {
@@ -95,6 +96,56 @@ namespace DP1.Tests
             };
             var emptyNodes = new List<NodeBase>();
             Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(emptyNodes, inputs, "OUT1"));
+        }
+
+        [TestMethod]
+        public void Convert1Test()
+        {
+            var defs = new List<NodeConnectionDefinition>
+            {
+                new NodeConnectionDefinition("IN1", new List<string> { "NOT1", "NOT2" }),
+                new NodeConnectionDefinition("NOT1", new List<string> { "OUT1" }),
+                new NodeConnectionDefinition("NOT2", new List<string> { "OUT2" }),
+            };
+
+            var nodeConnections = this.nodeConnectionFactory.Convert(this.nodes, defs);
+
+            Assert.AreEqual(4, nodeConnections.Count);
+
+            Assert.AreEqual("IN1", nodeConnections[0].InputNodes[0].NodeId);
+            Assert.AreEqual("NOT1", nodeConnections[0].OutputNode.NodeId);
+
+            Assert.AreEqual("IN1", nodeConnections[1].InputNodes[0].NodeId);
+            Assert.AreEqual("NOT2", nodeConnections[1].OutputNode.NodeId);
+
+
+            Assert.AreEqual("NOT1", nodeConnections[2].InputNodes[0].NodeId);
+            Assert.AreEqual("OUT1", nodeConnections[2].OutputNode.NodeId);
+
+            Assert.AreEqual("NOT2", nodeConnections[3].InputNodes[0].NodeId);
+            Assert.AreEqual("OUT2", nodeConnections[3].OutputNode.NodeId);
+        }
+
+        [TestMethod]
+        public void Convert2Test()
+        {
+            var defs = new List<NodeConnectionDefinition>
+            {
+                new NodeConnectionDefinition("IN1", new List<string> { "AND1" }),
+                new NodeConnectionDefinition("IN2", new List<string> { "AND1" }),
+                new NodeConnectionDefinition("AND1", new List<string> { "OUT1" }),
+            };
+
+            var nodeConnections = this.nodeConnectionFactory.Convert(this.nodes, defs);
+
+            Assert.AreEqual(2, nodeConnections.Count);
+
+            Assert.AreEqual("IN1", nodeConnections[0].InputNodes[0].NodeId);
+            Assert.AreEqual("IN2", nodeConnections[0].InputNodes[1].NodeId);
+            Assert.AreEqual("AND1", nodeConnections[0].OutputNode.NodeId);
+
+            Assert.AreEqual("AND1", nodeConnections[1].InputNodes[0].NodeId);
+            Assert.AreEqual("OUT1", nodeConnections[1].OutputNode.NodeId);
         }
     }
 }

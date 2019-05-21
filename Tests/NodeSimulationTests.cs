@@ -52,5 +52,83 @@ namespace DP1.Tests
             var output = simulation.GetOutputState();
             Assert.IsTrue(output["out"].LogicState);
         }
+
+        [TestMethod]
+        public void AndNodeTest()
+        {
+            var inputNode1 = new InputNode("in1", new State(true));
+            var inputNode2 = new InputNode("in2", new State(true));
+            var andNode = new AndNode("and");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    andNode),
+                new NodeConnection(andNode, outputNode)
+            };
+
+            var simulation = new NodeSimulation(nodeConnections);
+
+            simulation.RunSimulation();
+
+            var output = simulation.GetOutputState();
+            Assert.IsTrue(output["out"].LogicState);
+        }
+
+        [TestMethod]
+        public void AndFalseNodeTest()
+        {
+            var inputNode1 = new InputNode("in1", new State(false));
+            var inputNode2 = new InputNode("in2", new State(true));
+            var andNode = new AndNode("and");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    andNode),
+                new NodeConnection(andNode, outputNode)
+            };
+
+            var simulation = new NodeSimulation(nodeConnections);
+
+            simulation.RunSimulation();
+
+            var output = simulation.GetOutputState();
+            Assert.IsFalse(output["out"].LogicState);
+        }
+
+        [TestMethod]
+        public void OrNodeTest()
+        {
+            var inputNode1 = new InputNode("in1", new State(false));
+            var inputNode2 = new InputNode("in2", new State(true));
+            var orNode = new OrNode("or");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    orNode),
+                new NodeConnection(orNode, outputNode)
+            };
+
+            var simulation = new NodeSimulation(nodeConnections);
+
+            simulation.RunSimulation();
+
+            var output = simulation.GetOutputState();
+            Assert.IsTrue(output["out"].LogicState);
+        }
     }
 }

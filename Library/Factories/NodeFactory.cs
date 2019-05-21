@@ -1,5 +1,6 @@
 ﻿namespace DP1.Library.Factories
 {
+    using DP1.Library.File;
     using DP1.Library.Nodes;
     using System;
 
@@ -34,6 +35,11 @@
                 default:
                     throw new ArgumentException($"Node type not found. Error thrown for node: {id}.");
             }
+        }
+
+        public NodeBase CreateNode(NodeDefinition definition)
+        {
+            return this.CreateNode(definition.NodeId, definition.NodeType);
         }
     }
 }

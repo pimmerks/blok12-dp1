@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DP1.Library.File
 {
@@ -9,7 +8,12 @@ namespace DP1.Library.File
     {
         private const char CommentChar = '#';
 
-        public List<string> ReadLines(string path)
+        /// <summary>
+        /// Loads a file and returns all the lines.
+        /// </summary>
+        /// <param name="path">The path of the file.</param>
+        /// <returns>A list of lines.</returns>
+        public List<string> ReadFileLines(string path)
         {
             if (!System.IO.File.Exists(path))
             {
@@ -19,11 +23,15 @@ namespace DP1.Library.File
             return System.IO.File.ReadAllLines(path).ToList();
         }
 
+        /// <summary>
+        /// Parse multiple lines and return the <see cref="NodeDefinition"/>s and <see cref="NodeConnectionDefinition"/>.
+        /// </summary>
+        /// <param name="lines">The lines to parse.</param>
         public (List<NodeDefinition> nodeDefinitions,
                 List<NodeConnectionDefinition> nodeConnectionDefinitions)
-            ParseLines(List<string> text)
+            ParseLines(List<string> lines)
         {
-            var parsedText = text.Select(this.ParseLine).ToList();
+            var parsedText = lines.Select(this.ParseLine).ToList();
             var nodeDefinitions =
                 parsedText.Where(x => x is NodeDefinition)
                 .Select(x => x as NodeDefinition)
@@ -34,9 +42,16 @@ namespace DP1.Library.File
                 .Select(x => x as NodeConnectionDefinition)
                 .ToList();
 
+            // TODO: Duplicate entries?
+
             return (nodeDefinitions, connectionDefinitions);
         }
 
+        /// <summary>
+        /// Parses one line.
+        /// </summary>
+        /// <param name="line">The line to parse.</param>
+        /// <returns>An instance of <see cref="ParsedLine"/>.</returns>
         public ParsedLine ParseLine(string line)
         {
             var commentPos = line.IndexOf(CommentChar);

@@ -1,5 +1,4 @@
 ﻿namespace DP1.Library
-{
     public class State
     {
         public State()

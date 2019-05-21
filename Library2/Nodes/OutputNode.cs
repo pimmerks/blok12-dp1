@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Library2
+namespace DP1.Library.Nodes
 {
-    public class NotNode : NodeBase
+    public class OutputNode : NodeBase
     {
         /// <inheritdoc />
-        public NotNode(string nodeId)
+        public OutputNode(string nodeId)
             : base(nodeId)
         {
         }
@@ -18,13 +17,10 @@ namespace Library2
         {
             if (!input.Any() || input.Length != 1)
             {
-                throw new Exception("A NotNode Can only contain 1 input");
+                throw new Exception("An OutputNode can only contain 1 input");
             }
 
-            this.CurrentState = new State
-            {
-                LogicState = !input[0].LogicState
-            };
+            this.CurrentState = new State(input[0].LogicState);
         }
     }
 }

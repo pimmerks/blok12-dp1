@@ -1,4 +1,4 @@
-﻿namespace Library2
+﻿namespace DP1.Library
 {
     public class State
     {

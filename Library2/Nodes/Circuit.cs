@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DP1.Library.Nodes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library2
+namespace DP1.Library.Nodes
 {
     public class Circuit : NodeBase
     {

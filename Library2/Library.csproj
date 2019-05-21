@@ -2,10 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>DP1.Library</AssemblyName>
+    <RootNamespace>DP1.Library</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Nodes\" />
+    <Folder Include="NodeConnection\" />
   </ItemGroup>
 
 </Project>

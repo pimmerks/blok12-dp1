@@ -1,9 +1,11 @@
-﻿using Library2;
+﻿using DP1.Library;
+using DP1.Library.Nodes;
+using DP1.Library.Simulation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tests
+namespace DP1.Tests
 {
     [TestClass]
     public class NodeConnectionTests

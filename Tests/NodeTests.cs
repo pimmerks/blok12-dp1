@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Library2;
+using DP1.Library;
+using DP1.Library.Nodes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests
+namespace DP1.Tests
 {
     [TestClass]
     public class NodeTests

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Library2
+namespace DP1.Library.Nodes
 {
     public class InputNode : NodeBase
     {

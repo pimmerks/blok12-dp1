@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NodeConnectionFactoryTests.cs" />
     <Compile Include="NodeConnectionTests.cs" />
     <Compile Include="NodeSimulationTests.cs" />
     <Compile Include="NodeTests.cs" />

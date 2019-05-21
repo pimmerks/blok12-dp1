@@ -26,13 +26,13 @@
                 case "NOT":
                     return new NotNode(id);
                 case "NAND":
-                    throw new ArgumentException("NAND Nodes are not yet supported. Error thrown for node: " + id + ".");
+                    throw new ArgumentException($"NAND Nodes are not yet supported. Error thrown for node: {id}.");
                 case "NOR":
-                    throw new ArgumentException("NOR Nodes are not yet supported. Error thrown for node: " + id + ".");
+                    throw new ArgumentException($"NOR Nodes are not yet supported. Error thrown for node: {id}.");
                 case "XOR":
-                    throw new ArgumentException("XOR Nodes are not yet supported. Error thrown for node: " + id + ".");
+                    throw new ArgumentException($"XOR Nodes are not yet supported. Error thrown for node: {id}.");
                 default:
-                    throw new ArgumentException("Node type not found. Error thrown for node: " + id + ".");
+                    throw new ArgumentException($"Node type not found. Error thrown for node: {id}.");
             }
         }
     }

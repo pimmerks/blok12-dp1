@@ -64,6 +64,30 @@ namespace DP1.Tests
         }
 
         [TestMethod]
+        public void ParseIncorrectLine4Test()
+        {
+            var line = "NODE1:TEST,; # test";
+            var fp = new FileParser();
+            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+        }
+
+        [TestMethod]
+        public void ParseIncorrectLine5Test()
+        {
+            var line = "NODE1:TEST:TEST; # test";
+            var fp = new FileParser();
+            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+        }
+
+        [TestMethod]
+        public void ParseDuplicateNodeTest()
+        {
+            var line = "NODE1:TEST,TEST; # test";
+            var fp = new FileParser();
+            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+        }
+
+        [TestMethod]
         public void SmallInputFileTest()
         {
             var lines = FileParserInput.SmallInput.Split(Environment.NewLine.ToCharArray());

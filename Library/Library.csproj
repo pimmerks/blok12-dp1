@@ -6,8 +6,4 @@
     <RootNamespace>DP1.Library</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="NodeConnection\" />
-  </ItemGroup>
-
 </Project>

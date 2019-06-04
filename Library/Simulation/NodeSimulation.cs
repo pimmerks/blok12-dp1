@@ -8,12 +8,34 @@
 
     public class NodeSimulation
     {
-        public NodeSimulation(List<NodeConnection> nodeConnections)
+        public NodeSimulation(List<NodeConnection> nodeConnections, List<InputNode> inputNodes)
         {
             this.NodeConnections = nodeConnections;
+            this.InputNodes = inputNodes;
         }
 
         public List<NodeConnection> NodeConnections { get; set; }
+        public List<InputNode> InputNodes { get; set; }
+
+        public void SetInputs(Dictionary<string, State> states)
+        {
+            if(states.Count != InputNodes.Count)
+            {
+                throw new ArgumentException();
+            }
+            foreach(KeyValuePair<string, State> state in states)
+            {
+                InputNodes.Where(x => x.NodeId == state.Key).Single().SetState(state.Value);
+            }
+        }
+
+        public void ResetSimulation()
+        {
+            foreach(NodeConnection nodeConnection in this.NodeConnections)
+            {
+                nodeConnection.OutputNode.ResetState();
+            }
+        }
 
         public void RunSimulation()
         {

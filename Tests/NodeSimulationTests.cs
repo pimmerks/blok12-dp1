@@ -3,6 +3,8 @@ using DP1.Library.Nodes;
 using DP1.Library.Simulation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace DP1.Tests
 {
@@ -22,7 +24,12 @@ namespace DP1.Tests
                 new NodeConnection(notNode, outputNode)
             };
 
-            var simulation = new NodeSimulation(nodeConnections);
+            var inputNodes = new List<InputNode>
+            {
+                inputNode
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
 
             simulation.RunSimulation();
 
@@ -45,7 +52,12 @@ namespace DP1.Tests
                 new NodeConnection(notNode2, outputNode)
             };
 
-            var simulation = new NodeSimulation(nodeConnections);
+            var inputNodes = new List<InputNode>
+            {
+                inputNode
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
 
             simulation.RunSimulation();
 
@@ -71,7 +83,13 @@ namespace DP1.Tests
                 new NodeConnection(andNode, outputNode)
             };
 
-            var simulation = new NodeSimulation(nodeConnections);
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
 
             simulation.RunSimulation();
 
@@ -97,7 +115,13 @@ namespace DP1.Tests
                 new NodeConnection(andNode, outputNode)
             };
 
-            var simulation = new NodeSimulation(nodeConnections);
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
 
             simulation.RunSimulation();
 
@@ -123,12 +147,155 @@ namespace DP1.Tests
                 new NodeConnection(orNode, outputNode)
             };
 
-            var simulation = new NodeSimulation(nodeConnections);
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
 
             simulation.RunSimulation();
 
             var output = simulation.GetOutputState();
             Assert.IsTrue(output["out"].LogicState);
+        }
+
+        [TestMethod]
+        public void CreateSimulationTest()
+        {
+            var inputNode1 = new InputNode("in1", new State(false));
+            var inputNode2 = new InputNode("in2", new State(true));
+            var orNode = new OrNode("or");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    orNode),
+                new NodeConnection(orNode, outputNode)
+            };
+
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+
+            CollectionAssert.AreEqual(inputNodes, simulation.InputNodes);
+            CollectionAssert.AreEqual(nodeConnections, simulation.NodeConnections);
+        }
+
+        [TestMethod]
+        public void ResetSimulationTest()
+        {
+            var inputNode1 = new InputNode("in1", new State(false));
+            var inputNode2 = new InputNode("in2", new State(true));
+            var orNode = new OrNode("or");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    orNode),
+                new NodeConnection(orNode, outputNode)
+            };
+
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+
+            simulation.RunSimulation();
+            simulation.ResetSimulation();
+
+            var output = simulation.GetOutputState();
+            Assert.IsNull(output["out"]);
+        }
+
+        [TestMethod]
+        public void SetInputsTest()
+        {
+            var inputNode1 = new InputNode("in1");
+            var inputNode2 = new InputNode("in2");
+            var orNode = new OrNode("or");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    orNode),
+                new NodeConnection(orNode, outputNode)
+            };
+
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+
+            var inputValues = new Dictionary<string, State>
+            {
+                { inputNode1.NodeId, new State(true) },
+                { inputNode2.NodeId, new State(false) }
+            };
+
+            simulation.SetInputs(inputValues);
+
+            Assert.IsTrue(simulation.InputNodes.Where(x => x.NodeId == inputNode1.NodeId).Single().CurrentState.LogicState);
+            Assert.IsFalse(simulation.InputNodes.Where(x => x.NodeId == inputNode2.NodeId).Single().CurrentState.LogicState);
+        }
+
+        [TestMethod]
+        public void SetInvalidAmountInputsTest()
+        {
+            var inputNode1 = new InputNode("in1");
+            var inputNode2 = new InputNode("in2");
+            var orNode = new OrNode("or");
+            var outputNode = new OutputNode("out");
+
+            var nodeConnections = new List<NodeConnection>
+            {
+                new NodeConnection(
+                    new List<NodeBase> {
+                        inputNode1, inputNode2
+                    },
+                    orNode),
+                new NodeConnection(orNode, outputNode)
+            };
+
+            var inputNodes = new List<InputNode>
+            {
+                inputNode1,
+                inputNode2
+            };
+
+            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+
+            var inputValues = new Dictionary<string, State>
+            {
+                { inputNode1.NodeId, new State(true) },
+                { inputNode2.NodeId, new State(false) },
+                { orNode.NodeId, new State(false) }
+            };
+
+            Assert.ThrowsException<ArgumentException>(() => simulation.SetInputs(inputValues));
         }
     }
 }

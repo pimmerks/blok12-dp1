@@ -11,6 +11,11 @@
 
         public string NodeId { get; set; }
 
+        public virtual void ResetState()
+        {
+            CurrentState = null;
+        }
+
         public abstract void Calculate(params State[] input);
 
         public State CurrentState { get; protected set; }

@@ -15,6 +15,32 @@
 
         public List<NodeConnection> NodeConnections { get; set; }
 
+        public void SetInputs(Dictionary<string, State> states)
+        {
+            var InputNodes = this.NodeConnections
+                .SelectMany(x => 
+                    x.InputNodes.Where(y => y is InputNode))
+                .Select(x => x as InputNode)
+                .ToList();
+
+            if(states.Count != InputNodes.Count)
+            {
+                throw new ArgumentException();
+            }
+            foreach(KeyValuePair<string, State> state in states)
+            {
+                InputNodes.Where(x => x.NodeId == state.Key).Single().SetState(state.Value);
+            }
+        }
+
+        public void ResetSimulation()
+        {
+            foreach(NodeConnection nodeConnection in this.NodeConnections)
+            {
+                nodeConnection.OutputNode.ResetState();
+            }
+        }
+
         public void RunSimulation()
         {
             // First determine output nodes

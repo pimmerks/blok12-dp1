@@ -15,6 +15,10 @@ namespace DP1.Library.Nodes
             this.CurrentState = initialState;
         }
 
+        public void ResetInput()
+        {
+        }
+
         /// <inheritdoc />
         public override void Calculate(params State[] input)
         {

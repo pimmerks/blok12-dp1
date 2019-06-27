@@ -3,7 +3,7 @@
   <Class Name="DP1.Library.Nodes.NodeBase">
     <Position X="0.5" Y="2.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAABAAAAAAACAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Nodes\NodeBase.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -30,7 +30,7 @@
   <Class Name="DP1.Library.Nodes.InputNode">
     <Position X="0.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAACAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Nodes\InputNode.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,15 +59,18 @@
     <Position X="5.25" Y="0.75" Width="2.5" />
     <AssociationLine Name="NodeConnections" Type="DP1.Library.Simulation.NodeConnection" FixedFromPoint="true">
       <Path>
-        <Point X="6.562" Y="2.43" />
-        <Point X="6.562" Y="3.25" />
+        <Point X="6.562" Y="3.266" />
+        <Point X="6.562" Y="3.567" />
+        <Point X="8.05" Y="3.567" />
+        <Point X="8.05" Y="3.898" />
+        <Point X="7.75" Y="3.898" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.172" Y="0.383" />
+        <Position X="0.383" Y="0.172" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAgAAAAAIAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAACAgAAAAAAAAAAAAAAAAAAgAAAABIAAAAAAAgQAAA=</HashCode>
       <FileName>Simulation\NodeSimulation.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>

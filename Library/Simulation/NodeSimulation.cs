@@ -8,17 +8,21 @@
 
     public class NodeSimulation
     {
-        public NodeSimulation(List<NodeConnection> nodeConnections, List<InputNode> inputNodes)
+        public NodeSimulation(List<NodeConnection> nodeConnections)
         {
             this.NodeConnections = nodeConnections;
-            this.InputNodes = inputNodes;
         }
 
         public List<NodeConnection> NodeConnections { get; set; }
-        public List<InputNode> InputNodes { get; set; }
 
         public void SetInputs(Dictionary<string, State> states)
         {
+            var InputNodes = this.NodeConnections
+                .SelectMany(x => 
+                    x.InputNodes.Where(y => y is InputNode))
+                .Select(x => x as InputNode)
+                .ToList();
+
             if(states.Count != InputNodes.Count)
             {
                 throw new ArgumentException();

@@ -17,13 +17,9 @@
 
         public void SetInputs(Dictionary<string, State> states)
         {
-            var InputNodes = this.NodeConnections
-                .SelectMany(x => 
-                    x.InputNodes.Where(y => y is InputNode))
-                .Select(x => x as InputNode)
-                .ToList();
+            var InputNodes = GetInputNodes();
 
-            if(states.Count != InputNodes.Count)
+            if (states.Count != InputNodes.Count)
             {
                 throw new ArgumentException();
             }
@@ -31,6 +27,15 @@
             {
                 InputNodes.Where(x => x.NodeId == state.Key).Single().SetState(state.Value);
             }
+        }
+
+        public List<InputNode> GetInputNodes()
+        {
+             return this.NodeConnections
+                .SelectMany(x =>
+                    x.InputNodes.Where(y => y is InputNode))
+                .Select(x => x as InputNode)
+                .ToList();
         }
 
         public void ResetSimulation()

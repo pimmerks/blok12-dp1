@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileParserTestInputData.cs" />
     <Compile Include="FileParserTests.cs" />
     <Compile Include="NodeConnectionFactoryTests.cs" />
     <Compile Include="NodeConnectionTests.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="NodeSimulationTests.cs" />
     <Compile Include="NodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulationFacadeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

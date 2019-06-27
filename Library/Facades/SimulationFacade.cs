@@ -19,14 +19,19 @@
         {
             var fp = new FileParser();
             var lines = fp.ReadFileLines(path);
-            var definitions = fp.ParseLines(lines);
+            var (nodeDefinitions, nodeConnectionDefinitions) = fp.ParseLines(lines);
 
-            // Convert definitions to simulation
             var nodeFactory = new NodeFactory();
-            var nodes = definitions.nodeDefinitions
-                .Select(nodeFactory.CreateNode);
+            var nodeConFactory = new NodeConnectionFactory();
 
-            throw new NotImplementedException();
+            // Convert definitions to nodes
+            var nodes = nodeDefinitions.Select(nodeFactory.CreateNode).ToList();
+            
+            // And node connections
+            var nodeConnections =
+                nodeConFactory.Convert(nodes, nodeConnectionDefinitions);
+
+            return new NodeSimulation(nodeConnections);
         }
     }
 }

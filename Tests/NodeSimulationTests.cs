@@ -29,7 +29,7 @@ namespace DP1.Tests
                 inputNode
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             simulation.RunSimulation();
 
@@ -57,7 +57,7 @@ namespace DP1.Tests
                 inputNode
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             simulation.RunSimulation();
 
@@ -89,7 +89,7 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             simulation.RunSimulation();
 
@@ -121,7 +121,7 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             simulation.RunSimulation();
 
@@ -153,7 +153,7 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             simulation.RunSimulation();
 
@@ -185,9 +185,8 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
-
-            CollectionAssert.AreEqual(inputNodes, simulation.InputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
+            
             CollectionAssert.AreEqual(nodeConnections, simulation.NodeConnections);
         }
 
@@ -215,7 +214,7 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             simulation.RunSimulation();
             simulation.ResetSimulation();
@@ -248,7 +247,7 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             var inputValues = new Dictionary<string, State>
             {
@@ -258,8 +257,8 @@ namespace DP1.Tests
 
             simulation.SetInputs(inputValues);
 
-            Assert.IsTrue(simulation.InputNodes.Where(x => x.NodeId == inputNode1.NodeId).Single().CurrentState.LogicState);
-            Assert.IsFalse(simulation.InputNodes.Where(x => x.NodeId == inputNode2.NodeId).Single().CurrentState.LogicState);
+            Assert.IsTrue(simulation.GetInputNodes().Where(x => x.NodeId == inputNode1.NodeId).Single().CurrentState.LogicState);
+            Assert.IsFalse(simulation.GetInputNodes().Where(x => x.NodeId == inputNode2.NodeId).Single().CurrentState.LogicState);
         }
 
         [TestMethod]
@@ -286,7 +285,7 @@ namespace DP1.Tests
                 inputNode2
             };
 
-            var simulation = new NodeSimulation(nodeConnections, inputNodes);
+            var simulation = new NodeSimulation(nodeConnections);
 
             var inputValues = new Dictionary<string, State>
             {

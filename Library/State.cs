@@ -12,5 +12,10 @@
         }
 
         public bool LogicState { get; set; }
+
+        public override string ToString()
+        {
+            return $"{LogicState}";
+        }
     }
 }

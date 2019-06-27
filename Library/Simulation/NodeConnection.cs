@@ -3,6 +3,7 @@
     using DP1.Library.Nodes;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     public class NodeConnection
@@ -29,6 +30,11 @@
                 this.InputNodes.Select(x => x.CurrentState).ToArray());
 
             return OutputNode.CurrentState;
+        }
+
+        public override string ToString()
+        {
+            return $"{string.Concat(this.InputNodes.Select(x => $"{x.NodeId},"))} -> {this.OutputNode.NodeId}";
         }
     }
 }

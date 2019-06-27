@@ -1,5 +1,6 @@
 ﻿namespace DP1.Library.Factories
 {
+    using DP1.Library.File;
     using DP1.Library.Nodes;
     using DP1.Library.Simulation;
     using System;
@@ -25,7 +26,31 @@
             }
 
             return new NodeConnection(inputNodes, outputNode);
+        }
 
+        /// <summary>
+        /// Converts a list of <see cref="NodeBase"/> and <see cref="NodeConnectionDefinition"/>s to a list of
+        /// <see cref="NodeConnection"/>s.
+        /// </summary>
+        /// <param name="nodes">The list of usable nodes.</param>
+        /// <param name="definitions">The list of node definitions.</param>
+        /// <returns>A list of node connections.</returns>
+        public List<NodeConnection> Convert(
+            List<NodeBase> nodes, List<NodeConnectionDefinition> definitions)
+        {
+            var outputs = definitions.SelectMany(x => x.OutputNodes).Distinct();
+
+            var dict = new Dictionary<string, List<string>>();
+
+            foreach (var ou in outputs)
+            {
+                var t = definitions
+                    .Where(x => x.OutputNodes.Contains(ou));
+
+                dict.Add(ou, t.Select(x => x.InputNode).ToList());
+            }
+
+            return dict.Select(x => this.CreateNodeConnection(nodes, x.Value, x.Key)).ToList();
         }
     }
 }

@@ -12,6 +12,7 @@
             {
                 throw new ArgumentException("Node id can't be empty.");
             }
+
             switch (nodeType)
             {
                 case "INPUT_LOW":

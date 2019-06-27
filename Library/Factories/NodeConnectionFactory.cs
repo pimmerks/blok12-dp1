@@ -28,6 +28,13 @@
             return new NodeConnection(inputNodes, outputNode);
         }
 
+        /// <summary>
+        /// Converts a list of <see cref="NodeBase"/> and <see cref="NodeConnectionDefinition"/>s to a list of
+        /// <see cref="NodeConnection"/>s.
+        /// </summary>
+        /// <param name="nodes">The list of usable nodes.</param>
+        /// <param name="definitions">The list of node definitions.</param>
+        /// <returns>A list of node connections.</returns>
         public List<NodeConnection> Convert(
             List<NodeBase> nodes, List<NodeConnectionDefinition> definitions)
         {

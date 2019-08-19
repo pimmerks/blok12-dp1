@@ -1,6 +1,5 @@
 ﻿namespace Tests
 {
-    using DP1.Library.Facades;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;

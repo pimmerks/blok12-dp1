@@ -21,11 +21,12 @@
         {
             var InputNodes = GetInputNodes();
 
-            //if (states.Count != InputNodes.Count)
-            //{
-            //    throw new ArgumentException();
-            //}
-            foreach(KeyValuePair<string, State> state in states)
+            if (states.Count > InputNodes.Count)
+            {
+                throw new ArgumentException();
+            }
+
+            foreach (KeyValuePair<string, State> state in states)
             {
                 InputNodes.Where(x => x.NodeId == state.Key).Single().SetState(state.Value);
             }
@@ -124,8 +125,6 @@
                 if(loopsCheck != "Next nodes check") remainingNodes = false;
             }
 
-            // Calculate delay time in nanoseconda
-            DelayTime = (DelayTime * 15);
             return loopsCheck;
         }
 

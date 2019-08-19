@@ -15,40 +15,40 @@
 
         static void Main(string[] args)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            Console.WriteLine($"Loading from path {filePath}");
+            //var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            //Console.WriteLine($"Loading from path {filePath}");
 
-            if (!File.Exists(filePath))
-            {
-                Console.WriteLine("Cannot find file!");
+            //if (!File.Exists(filePath))
+            //{
+            //    Console.WriteLine("Cannot find file!");
 
-                Console.ReadLine();
-                return;
-            }
+            //    Console.ReadLine();
+            //    return;
+            //}
 
-            var sim = new SimulationFacade().LoadSimulation(filePath);
+            // var sim = new SimulationFacade().LoadSimulation(filePath);
 
-            Console.WriteLine("Loaded simulation");
-            Console.WriteLine("State before:");
-            var stateBefore = sim.GetOutputState();
-            foreach (var item in stateBefore)
-            {
-                Console.WriteLine($"{item.Key} -> {item.Value}");
-            }
+            //Console.WriteLine("Loaded simulation");
+            //Console.WriteLine("State before:");
+            //var stateBefore = sim.GetOutputState();
+            //foreach (var item in stateBefore)
+            //{
+            //    Console.WriteLine($"{item.Key} -> {item.Value}");
+            //}
 
-            sim.RunSimulation();
+            //sim.RunSimulation();
 
 
-            Console.WriteLine("State after:");
-            var stateAfter = sim.GetOutputState();
+            //Console.WriteLine("State after:");
+            //var stateAfter = sim.GetOutputState();
 
-            foreach (var item in stateAfter)
-            {
-                Console.WriteLine($"{item.Key} -> {item.Value}");
-            }
+            //foreach (var item in stateAfter)
+            //{
+            //    Console.WriteLine($"{item.Key} -> {item.Value}");
+            //}
 
-            Console.WriteLine("Simulation complete");
-            Console.ReadLine();
+            //Console.WriteLine("Simulation complete");
+            //Console.ReadLine();
         }
     }
 }

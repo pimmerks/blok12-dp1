@@ -102,5 +102,123 @@ namespace DP1.Tests
 
             Assert.IsFalse(orNode.CurrentState.LogicState);
         }
+
+        [TestMethod]
+        public void NorNodeTest()
+        {
+            var norNode = new NorNode("");
+
+            var states = new List<State>
+            {
+                new State(true),
+                new State(true)
+            };
+
+            norNode.Calculate(states.ToArray());
+
+            Assert.IsFalse(norNode.CurrentState.LogicState);
+
+            states = new List<State>
+            {
+                new State(false),
+                new State(true)
+            };
+
+            norNode.Calculate(states.ToArray());
+
+            Assert.IsFalse(norNode.CurrentState.LogicState);
+
+            states = new List<State>
+            {
+                new State(false),
+                new State(false)
+            };
+
+            norNode.Calculate(states.ToArray());
+
+            Assert.IsTrue(norNode.CurrentState.LogicState);
+        }
+
+        [TestMethod]
+        public void NandNodeTest()
+        {
+            var nandNode = new NandNode("");
+
+            var states = new List<State>
+            {
+                new State(true),
+                new State(true)
+            };
+
+            nandNode.Calculate(states.ToArray());
+
+            Assert.IsFalse(nandNode.CurrentState.LogicState);
+
+
+
+            states = new List<State>
+            {
+                new State(false),
+                new State(true)
+            };
+
+            nandNode.Calculate(states.ToArray());
+
+            Assert.IsTrue(nandNode.CurrentState.LogicState);
+
+
+
+            states = new List<State>
+            {
+                new State(false),
+                new State(false)
+            };
+
+            nandNode.Calculate(states.ToArray());
+
+            Assert.IsTrue(nandNode.CurrentState.LogicState);
+        }
+
+
+
+        [TestMethod]
+        public void XorNodeTest()
+        {
+            var xorNode = new XorNode("");
+
+            var states = new List<State>
+            {
+                new State(true),
+                new State(true)
+            };
+
+            xorNode.Calculate(states.ToArray());
+
+            Assert.IsFalse(xorNode.CurrentState.LogicState);
+
+
+
+            states = new List<State>
+            {
+                new State(false),
+                new State(true)
+            };
+
+            xorNode.Calculate(states.ToArray());
+
+            Assert.IsTrue(xorNode.CurrentState.LogicState);
+
+
+
+            states = new List<State>
+            {
+                new State(false),
+                new State(false)
+            };
+
+            xorNode.Calculate(states.ToArray());
+
+            Assert.IsFalse(xorNode.CurrentState.LogicState);
+        }
     }
 }

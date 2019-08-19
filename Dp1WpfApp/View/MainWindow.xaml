@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:Dp1WpfApp"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
@@ -14,6 +15,50 @@
         </Grid.RowDefinitions>
         <Button Command="{Binding BrowseCommand}" Content="Browse" HorizontalAlignment="Left" Margin="10,10,0,10" Width="75"/>
         <Button Command="{Binding LoadFile}" Content="Load" HorizontalAlignment="Left" Margin="90,10,0,10" Width="75"/>
-        <Label Content="{Binding CurrentFilename}" HorizontalAlignment="Left" Margin="170,10,0,10" Height="30" VerticalAlignment="Center"/>
+        <Label Content="{Binding CurrentFilename}" Margin="170,5,115,5" Height="30" VerticalAlignment="Center"/>
+
+        <Button Command="{Binding ResetAndStart}" Content="Reset and Start" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Input nodes" Grid.Column="0" Margin="10,10,10,0" VerticalAlignment="Top" Height="25"/>
+            <ListView ItemsSource="{Binding InputNodes}" Grid.Column="0" Margin="10,40,10,10" Name="ListViewInputNodes">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction 
+                        Command="{Binding SetNewState}"
+                        CommandParameter="{Binding ElementName=ListViewInputNodes, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding NodeId}" />
+                        <GridViewColumn Header="State" Width="100" DisplayMemberBinding="{Binding CurrentState}" />
+                    </GridView>
+                </ListView.View>
+
+            </ListView>
+
+
+            <Label Content="Nodes" Grid.Column="1" Margin="10,10,10,0" VerticalAlignment="Top" Height="25"/>
+            <ListBox Grid.Column="1" Margin="10,40,10,10"/>
+
+
+            <Label Content="Output nodes" Grid.Column="2" Margin="10,10,10,0" VerticalAlignment="Top" Height="25"/>
+            <ListView ItemsSource="{Binding OutputState}" Grid.Column="2" Margin="10,40,10,10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Key}" />
+                        <GridViewColumn Header="State" Width="100" DisplayMemberBinding="{Binding Value}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>

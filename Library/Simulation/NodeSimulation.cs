@@ -19,10 +19,10 @@
         {
             var InputNodes = GetInputNodes();
 
-            if (states.Count != InputNodes.Count)
-            {
-                throw new ArgumentException();
-            }
+            //if (states.Count != InputNodes.Count)
+            //{
+            //    throw new ArgumentException();
+            //}
             foreach(KeyValuePair<string, State> state in states)
             {
                 InputNodes.Where(x => x.NodeId == state.Key).Single().SetState(state.Value);
@@ -35,6 +35,7 @@
                 .SelectMany(x =>
                     x.InputNodes.Where(y => y is InputNode))
                 .Select(x => x as InputNode)
+                .Distinct()
                 .ToList();
         }
 

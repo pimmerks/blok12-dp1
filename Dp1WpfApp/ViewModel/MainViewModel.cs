@@ -1,9 +1,13 @@
+using DP1.Library;
 using DP1.Library.Factories;
 using DP1.Library.File;
+using DP1.Library.Nodes;
 using DP1.Library.Simulation;
+using Dp1WpfApp.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -36,6 +40,15 @@ namespace Dp1WpfApp.ViewModel
 
         public NodeSimulation CurrentSimulation { get; set; }
 
+        public List<InputNode> InputNodes {
+            get
+            {
+                return this.CurrentSimulation?.GetInputNodes();
+            }
+        }
+
+        public Dictionary<string, State> OutputState => this.CurrentSimulation?.GetOutputState();
+
         /// <summary>
         /// Opens a file browser to display the files.
         /// </summary>
@@ -54,6 +67,11 @@ namespace Dp1WpfApp.ViewModel
             {
                 this.CurrentFilename = dg.FileName;
                 this.Title = $"DP1 {this.CurrentFilename}";
+            }
+
+            if (this.LoadFile.CanExecute(null))
+            {
+                this.LoadFile.Execute(null);
             }
         });
 
@@ -94,6 +112,23 @@ namespace Dp1WpfApp.ViewModel
                 return false;
             }
             return true;
+        });
+
+        public ICommand ResetAndStart => new RelayCommand(() =>
+        {
+            this.CurrentSimulation.ResetSimulation();
+            this.CurrentSimulation.RunSimulation();
+            this.RaisePropertyChanged(nameof(this.OutputState));
+        });
+
+        /// <summary>
+        /// Sets the new state
+        /// </summary>
+        public ICommand SetNewState => new RelayCommand<InputNode>((node) =>
+        {
+            // Open dialog to define new state.
+            this.CurrentSimulation.SetInputs(new Dictionary<string, State>() { { node.NodeId, new State(!node.CurrentState.LogicState) } });
+            this.RaisePropertyChanged(nameof(this.InputNodes));
         });
     }
 }

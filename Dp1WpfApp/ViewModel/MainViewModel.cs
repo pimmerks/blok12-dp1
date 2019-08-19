@@ -45,6 +45,8 @@ namespace Dp1WpfApp.ViewModel
 
         public List<NodeConnection> NodeConnections => this.CurrentSimulation?.NodeConnections;
 
+        public string PropegationDelay => $"Delay time: {this.CurrentSimulation?.DelayTime}";
+
         /// <summary>
         /// Opens a file browser to display the files.
         /// </summary>

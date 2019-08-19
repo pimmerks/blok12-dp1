@@ -15,6 +15,8 @@
 
         public List<NodeConnection> NodeConnections { get; set; }
 
+        public double DelayTime { get; set; }
+
         public void SetInputs(Dictionary<string, State> states)
         {
             var InputNodes = GetInputNodes();
@@ -83,6 +85,9 @@
         // Check for loops in simulation, returns false for no loops
         public String ValidSimulationCheck()
         {
+            // Set delay time to 0
+            DelayTime = 0;
+
             // Determine output nodes
             var outputs = this.NodeConnections.Where(x => x.OutputNode is OutputNode).ToList();
 
@@ -118,6 +123,9 @@
                 // If there are no more nodes left the while loop will stop
                 if(loopsCheck != "Next nodes check") remainingNodes = false;
             }
+
+            // Calculate delay time in nanoseconda
+            DelayTime = (DelayTime * 15);
             return loopsCheck;
         }
 
@@ -154,6 +162,9 @@
                         pathList.Last().Add(input);
                     }
                 }
+                // Check if path is the longest path
+                if (DelayTime < path.Count()) DelayTime = path.Count();
+
                 // Remove the obsolute path
                 pathList.Remove(path);
             }

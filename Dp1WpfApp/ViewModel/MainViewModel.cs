@@ -30,8 +30,6 @@ namespace Dp1WpfApp.ViewModel
             else
             {
                 // Code runs "for real"
-                this.CurrentFilename = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "advanced-input.txt");
-                this.LoadFile.Execute(null);
             }
         }
 
@@ -101,7 +99,16 @@ namespace Dp1WpfApp.ViewModel
             var nodeConnections =
                 nodeConFactory.Convert(nodes, nodeConnectionDefinitions);
 
-            this.CurrentSimulation = new NodeSimulation(nodeConnections);
+            var sim = new NodeSimulation(nodeConnections);
+            var check = sim.ValidSimulationCheck();
+            if (!string.IsNullOrWhiteSpace(check))
+            {
+                MessageBox.Show(check);
+                this.CurrentSimulation = null;
+                return;
+            }
+
+            this.CurrentSimulation = sim;
         }, 
             () =>
         {
@@ -117,6 +124,9 @@ namespace Dp1WpfApp.ViewModel
             this.CurrentSimulation.ResetSimulation();
             this.CurrentSimulation.RunSimulation();
             this.RaisePropertyChanged(nameof(this.OutputState));
+        }, () =>
+        {
+            return this.CurrentSimulation != null;
         });
 
         /// <summary>

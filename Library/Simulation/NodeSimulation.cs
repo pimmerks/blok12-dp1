@@ -78,5 +78,70 @@
                 .Where(x => x.OutputNode is OutputNode)
                 .ToDictionary(x => x.OutputNode.NodeId, x => x.OutputNode.CurrentState);
         }
+
+        // Check for loops in simulation, returns false for no loops
+        public Boolean SimulationLoopsCheck()
+        {
+            // Determine output nodes
+            var outputs = this.NodeConnections.Where(x => x.OutputNode is OutputNode).ToList();
+
+            // Create a list of paths
+            List<List<NodeConnection>> pathList = new List<List<NodeConnection>>();
+
+            // Add a path for every output
+            foreach (var output in outputs)
+            {
+                pathList.Add(new List<NodeConnection> { output });
+            }
+
+            // Chech the paths for loops
+            var remainingNodes = true;
+            var loopsCheck = "";
+            while (remainingNodes)
+            {
+                // Create a new temp list so the paths can be edited during the foreach loop
+                var tempPathList = new List<List<NodeConnection>>(pathList);
+                loopsCheck = PathLoopsCheck(pathList, tempPathList);
+
+                // If there are no more nodes left the while loop will stop
+                if(loopsCheck != "Next nodes check") remainingNodes = false;
+            }
+            if (loopsCheck == "Contains no loops") return false;
+            else return true;
+        }
+
+        // Check for loops in path, returns false for no loops
+        private String PathLoopsCheck(List<List<NodeConnection>> pathList, List<List<NodeConnection>> tempPathList)
+        {
+            foreach (var path in tempPathList)
+            {
+                var currentNode = path.Last();
+
+                // Get the next set of nodes
+                var inputIds = currentNode.InputNodes.Select(x => x.NodeId).ToList();
+                var inputs = this.NodeConnections
+                    .Where(x => inputIds.Contains(x.OutputNode.NodeId)).ToList();
+
+                foreach (var input in inputs)
+                {
+                    // If the node already exists in the current path a loop has been found
+                    if (path.Contains(input)) return "Contains loops";
+                    else
+                    {
+                        // Create a new path for every new node
+                        pathList.Add(path);
+                        pathList.Last().Add(input);
+                    }
+                }
+                // Remove the obsolute path
+                pathList.Remove(path);
+            }
+
+            // If any path still remains continue with next set of nodes
+            if (pathList.Count() > 0) return "Next nodes check";
+
+            // If no loops have been found return false
+            return "Contains no loops";
+        }
     }
 }

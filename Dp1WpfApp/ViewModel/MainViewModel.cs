@@ -31,6 +31,7 @@ namespace Dp1WpfApp.ViewModel
             {
                 // Code runs "for real"
                 this.CurrentFilename = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "advanced-input.txt");
+                this.LoadFile.Execute(null);
             }
         }
 
@@ -40,14 +41,11 @@ namespace Dp1WpfApp.ViewModel
 
         public NodeSimulation CurrentSimulation { get; set; }
 
-        public List<InputNode> InputNodes {
-            get
-            {
-                return this.CurrentSimulation?.GetInputNodes();
-            }
-        }
+        public List<InputNode> InputNodes => this.CurrentSimulation?.GetInputNodes();
 
         public Dictionary<string, State> OutputState => this.CurrentSimulation?.GetOutputState();
+
+        public List<NodeConnection> NodeConnections => this.CurrentSimulation?.NodeConnections;
 
         /// <summary>
         /// Opens a file browser to display the files.

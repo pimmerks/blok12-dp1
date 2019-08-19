@@ -101,7 +101,10 @@ namespace Dp1WpfApp.ViewModel
             var nodeConnections =
                 nodeConFactory.Convert(nodes, nodeConnectionDefinitions);
 
-            var sim = new NodeSimulation(nodeConnections);
+            var sim = NodeSimulationBuilder.GetBuilder()
+                        .AddNodeConnections(nodeConnections)
+                        .Build();
+
             var check = sim.ValidSimulationCheck();
             if (!string.IsNullOrWhiteSpace(check))
             {

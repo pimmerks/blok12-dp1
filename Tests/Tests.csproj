@@ -58,7 +58,7 @@
     <Compile Include="NodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationFacadeTest.cs" />
-    <Compile Include="SimulationLoopsCheckTest.cs" />
+    <Compile Include="ValidSimulationCheckTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

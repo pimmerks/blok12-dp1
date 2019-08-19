@@ -80,10 +80,21 @@
         }
 
         // Check for loops in simulation, returns false for no loops
-        public Boolean SimulationLoopsCheck()
+        public String ValidSimulationCheck()
         {
             // Determine output nodes
             var outputs = this.NodeConnections.Where(x => x.OutputNode is OutputNode).ToList();
+
+            // Determine input nodes
+            var inputs = GetInputNodes();
+
+            // Check if Simulation contains output nodes
+            if (outputs.Count == 0)
+                return "Simulation contains no output nodes";
+
+            // Check if Simulation contains input nodes
+            if (inputs.Count == 0)
+                return "Simulation contains no input nodes";
 
             // Create a list of paths
             List<List<NodeConnection>> pathList = new List<List<NodeConnection>>();
@@ -101,17 +112,16 @@
             {
                 // Create a new temp list so the paths can be edited during the foreach loop
                 var tempPathList = new List<List<NodeConnection>>(pathList);
-                loopsCheck = PathLoopsCheck(pathList, tempPathList);
+                loopsCheck = ValidPathCheck(pathList, tempPathList);
 
                 // If there are no more nodes left the while loop will stop
                 if(loopsCheck != "Next nodes check") remainingNodes = false;
             }
-            if (loopsCheck == "Contains no loops") return false;
-            else return true;
+            return loopsCheck;
         }
 
         // Check for loops in path, returns false for no loops
-        private String PathLoopsCheck(List<List<NodeConnection>> pathList, List<List<NodeConnection>> tempPathList)
+        private String ValidPathCheck(List<List<NodeConnection>> pathList, List<List<NodeConnection>> tempPathList)
         {
             foreach (var path in tempPathList)
             {
@@ -122,10 +132,20 @@
                 var inputs = this.NodeConnections
                     .Where(x => inputIds.Contains(x.OutputNode.NodeId)).ToList();
 
+                // Check if path ends in an input node
+                if (inputs.Count == 0)
+                {
+                    foreach(var inputNode in currentNode.InputNodes)
+                    {
+                        if(inputNode.GetType() != typeof(InputNode))
+                            return "Path does not end in input node";
+                    }
+                }
+
                 foreach (var input in inputs)
                 {
                     // If the node already exists in the current path a loop has been found
-                    if (path.Contains(input)) return "Contains loops";
+                    if (path.Contains(input)) return "Simulation contains loop(s)";
                     else
                     {
                         // Create a new path for every new node
@@ -141,7 +161,7 @@
             if (pathList.Count() > 0) return "Next nodes check";
 
             // If no loops have been found return false
-            return "Contains no loops";
+            return null;
         }
     }
 }

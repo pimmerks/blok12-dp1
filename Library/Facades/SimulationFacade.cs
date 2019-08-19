@@ -31,6 +31,8 @@
             var nodeConnections =
                 nodeConFactory.Convert(nodes, nodeConnectionDefinitions);
 
+            var nodeSimulation = new NodeSimulation(nodeConnections);
+
             return new NodeSimulation(nodeConnections);
         }
     }

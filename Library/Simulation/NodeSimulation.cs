@@ -124,8 +124,8 @@
                 if(loopsCheck != "Next nodes check") remainingNodes = false;
             }
 
-            // Calculate delay time
-            DelayTime = (DelayTime * 0.0000000015);
+            // Calculate delay time in nanoseconda
+            DelayTime = (DelayTime * 15);
             return loopsCheck;
         }
 

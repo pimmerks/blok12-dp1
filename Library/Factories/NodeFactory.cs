@@ -1,16 +1,16 @@
 ﻿namespace DP1.Library.Factories
 {
-    using DP1.Library.File;
-    using DP1.Library.Nodes;
+    using File;
+    using Nodes;
     using System;
 
     public class NodeFactory
     {
         public NodeBase CreateNode(string id, string nodeType)
         {
-            if(id == "")
+            if(string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentException("Node id can't be empty.");
+                throw new ArgumentException("Node id can't be empty.", nameof(id));
             }
 
             switch (nodeType)
@@ -28,11 +28,11 @@
                 case "NOT":
                     return new NotNode(id);
                 case "NAND":
-                    throw new ArgumentException($"NAND Nodes are not yet supported. Error thrown for node: {id}.");
+                    return new NandNode(id);
                 case "NOR":
-                    throw new ArgumentException($"NOR Nodes are not yet supported. Error thrown for node: {id}.");
+                    return new NorNode(id);
                 case "XOR":
-                    throw new ArgumentException($"XOR Nodes are not yet supported. Error thrown for node: {id}.");
+                    return new XorNode(id);
                 default:
                     throw new ArgumentException($"Node type not found. Error thrown for node: {id}.");
             }

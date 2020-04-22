@@ -17,13 +17,13 @@ namespace DP1.Library.Nodes
         {
             if (!input.Any())
             {
-                throw new Exception("An AndNode must contain at least 1 inputs");
+                throw new Exception("An AndNode must contain at least 1 inputs. Id: {this.NodeId}");
             }
 
 
             this.CurrentState = new State
             {
-                LogicState = !input.Where(x => x.LogicState == false).Any()
+                LogicState = !input.Any(x => x.LogicState == false)
             };
         }
     }

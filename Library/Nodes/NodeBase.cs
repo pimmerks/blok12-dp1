@@ -13,7 +13,7 @@
 
         public virtual void ResetState()
         {
-            CurrentState = null;
+            this.CurrentState = null;
         }
 
         public abstract void Calculate(params State[] input);

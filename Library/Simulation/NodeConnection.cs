@@ -1,6 +1,6 @@
 ﻿namespace DP1.Library.Simulation
 {
-    using DP1.Library.Nodes;
+    using Nodes;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -36,7 +36,7 @@
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.InputNodes)));
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.String)));
 
-            return OutputNode.CurrentState;
+            return this.OutputNode.CurrentState;
         }
 
         public string String => this.ToString();

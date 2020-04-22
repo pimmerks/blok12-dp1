@@ -6,14 +6,18 @@
     {
         private List<NodeConnection> nodeConnections = new List<NodeConnection>();
 
+        private NodeSimulationBuilder()
+        {
+        }
+
         public static NodeSimulationBuilder GetBuilder()
         {
             return new NodeSimulationBuilder();
         }
 
-        public NodeSimulationBuilder AddNodeConnections(List<NodeConnection> nodeConnections)
+        public NodeSimulationBuilder AddNodeConnections(List<NodeConnection> connections)
         {
-            this.nodeConnections.AddRange(nodeConnections);
+            this.nodeConnections.AddRange(connections);
             return (NodeSimulationBuilder)this.MemberwiseClone();
         }
 

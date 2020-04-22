@@ -15,9 +15,9 @@ namespace DP1.Library.Nodes
         public XorNode(string nodeId)
             : base(nodeId)
         {
-            andNode = new AndNode(nodeId + "-And");
-            nandNode = new NandNode(nodeId + "-Nand");
-            orNode = new OrNode(nodeId + "-Or");
+            this.andNode = new AndNode(nodeId + "-And");
+            this.nandNode = new NandNode(nodeId + "-Nand");
+            this.orNode = new OrNode(nodeId + "-Or");
         }
 
         /// <inheritdoc />
@@ -25,16 +25,16 @@ namespace DP1.Library.Nodes
         {
             if (!input.Any() || input.Length < 1)
             {
-                throw new Exception("An XorNode must contain at least 2 inputs");
+                throw new Exception($"An XorNode must contain at least 2 inputs. Id: {this.NodeId}");
             }
 
-            nandNode.Calculate(input);
-            orNode.Calculate(input);
-            andNode.Calculate(nandNode.CurrentState, orNode.CurrentState);
+            this.nandNode.Calculate(input);
+            this.orNode.Calculate(input);
+            this.andNode.Calculate(this.nandNode.CurrentState, this.orNode.CurrentState);
 
             this.CurrentState = new State
             {
-                LogicState = andNode.CurrentState.LogicState
+                LogicState = this.andNode.CurrentState.LogicState
             };
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace DP1.Library.Simulation
 {
-    using DP1.Library.Nodes;
+    using Nodes;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,16 +19,16 @@
 
         public void SetInputs(Dictionary<string, State> states)
         {
-            var InputNodes = GetInputNodes();
+            var inputNodes = this.GetInputNodes();
 
-            if (states.Count > InputNodes.Count)
+            if (states.Count > inputNodes.Count)
             {
                 throw new ArgumentException();
             }
 
             foreach (KeyValuePair<string, State> state in states)
             {
-                InputNodes.Where(x => x.NodeId == state.Key).Single().SetState(state.Value);
+                inputNodes.Single(x => x.NodeId == state.Key).SetState(state.Value);
             }
         }
 
@@ -87,13 +87,13 @@
         public String ValidSimulationCheck()
         {
             // Set delay time to 0
-            DelayTime = 0;
+            this.DelayTime = 0;
 
             // Determine output nodes
             var outputs = this.NodeConnections.Where(x => x.OutputNode is OutputNode).ToList();
 
             // Determine input nodes
-            var inputs = GetInputNodes();
+            var inputs = this.GetInputNodes();
 
             // Check if Simulation contains output nodes
             if (outputs.Count == 0)
@@ -112,14 +112,14 @@
                 pathList.Add(new List<NodeConnection> { output });
             }
 
-            // Chech the paths for loops
+            // Check the paths for loops
             var remainingNodes = true;
             var loopsCheck = "";
             while (remainingNodes)
             {
                 // Create a new temp list so the paths can be edited during the foreach loop
                 var tempPathList = new List<List<NodeConnection>>(pathList);
-                loopsCheck = ValidPathCheck(pathList, tempPathList);
+                loopsCheck = this.ValidPathCheck(pathList, tempPathList);
 
                 // If there are no more nodes left the while loop will stop
                 if(loopsCheck != "Next nodes check") remainingNodes = false;
@@ -162,7 +162,7 @@
                     }
                 }
                 // Check if path is the longest path
-                if (DelayTime < path.Count()) DelayTime = path.Count();
+                if (this.DelayTime < path.Count()) this.DelayTime = path.Count();
 
                 // Remove the obsolute path
                 pathList.Remove(path);

@@ -15,7 +15,7 @@ namespace DP1.Library.Nodes
         /// <inheritdoc />
         public override void Calculate(params State[] input)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException($"Circuit is not implemented yet. Id: {this.NodeId}");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace DP1.Library.Nodes
         {
             if (!input.Any() || input.Length != 1)
             {
-                throw new Exception("An OutputNode can only contain 1 input");
+                throw new Exception($"An OutputNode can only contain 1 input. Id: {this.NodeId}");
             }
 
             this.CurrentState = new State(input[0].LogicState);

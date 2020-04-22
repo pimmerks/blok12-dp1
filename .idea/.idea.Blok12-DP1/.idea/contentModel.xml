@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\pimmer\.Rider2019.3\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\pimmer\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\pimmer\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Blok12-DP1.1131830214.00" t="ExcludeRecursive" />
+    <e p="D:\Git\blok12-dp1" t="IncludeFlat">
+      <e p="Blok12-DP1.sln" t="IncludeFlat" />
+      <e p="ConsoleApp" t="IncludeRecursive">
+        <e p="advanced-input.txt" t="Include" />
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ConsoleApp.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="simple-input.txt" t="Include" />
+      </e>
+      <e p="Dp1WpfApp" t="IncludeRecursive">
+        <e p="advanced-input.txt" t="Include" />
+        <e p="App.config" t="Include" />
+        <e p="App.xaml" t="Include" />
+        <e p="App.xaml.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Converter" t="Include">
+          <e p="NodeToTypeConverter.cs" t="Include" />
+        </e>
+        <e p="Dp1WpfApp.csproj" t="IncludeRecursive" />
+        <e p="FodyWeavers.xml" t="Include" />
+        <e p="Model" t="Include">
+          <e p="SetNewState.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="App.g.cs" t="Include" />
+            <e p="GeneratedInternalTypeHelper.g.cs" t="Include" />
+            <e p="View" t="Include">
+              <e p="MainWindow.g.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="View" t="Include">
+          <e p="MainWindow.xaml" t="Include" />
+          <e p="MainWindow.xaml.cs" t="Include" />
+        </e>
+        <e p="ViewModel" t="Include">
+          <e p="MainViewModel.cs" t="Include" />
+          <e p="ViewModelLocator.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Library" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ClassDiagram" t="Include">
+          <e p="ClassDiagram.cd" t="Include" />
+        </e>
+        <e p="Exceptions" t="Include">
+          <e p="LineParseException.cs" t="Include" />
+        </e>
+        <e p="Factories" t="Include">
+          <e p="NodeConnectionFactory.cs" t="Include" />
+          <e p="NodeFactory.cs" t="Include" />
+        </e>
+        <e p="File" t="Include">
+          <e p="FileParser.cs" t="Include" />
+          <e p="NodeConnectionDefinition.cs" t="Include" />
+          <e p="NodeDefinition.cs" t="Include" />
+          <e p="ParsedLine.cs" t="Include" />
+        </e>
+        <e p="Library.csproj" t="IncludeRecursive" />
+        <e p="Nodes" t="Include">
+          <e p="AndNode.cs" t="Include" />
+          <e p="Circuit.cs" t="Include" />
+          <e p="InputNode.cs" t="Include" />
+          <e p="NandNode.cs" t="Include" />
+          <e p="NodeBase.cs" t="Include" />
+          <e p="NorNode.cs" t="Include" />
+          <e p="NotNode.cs" t="Include" />
+          <e p="OrNode.cs" t="Include" />
+          <e p="OutputNode.cs" t="Include" />
+          <e p="XorNode.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Library.AssemblyInfo.cs" t="Include" />
+            </e>
+            <e p="netstandard2.1" t="Include">
+              <e p="Library.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Simulation" t="Include">
+          <e p="NodeConnection.cs" t="Include" />
+          <e p="NodeSimulation.cs" t="Include" />
+          <e p="NodeSimulationBuilder.cs" t="Include" />
+        </e>
+        <e p="State.cs" t="Include" />
+      </e>
+      <e p="packages" t="ExcludeRecursive">
+        <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" t="Include" />
+        <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" t="Include" />
+        <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll" t="Include" />
+      </e>
+      <e p="Tests" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="FileParserTestInputData.cs" t="Include" />
+        <e p="FileParserTests.cs" t="Include" />
+        <e p="NodeConnectionFactoryTests.cs" t="Include" />
+        <e p="NodeConnectionTests.cs" t="Include" />
+        <e p="NodeFactoryTests.cs" t="Include" />
+        <e p="NodeSimulationTests.cs" t="Include" />
+        <e p="NodeTests.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="SimulationFacadeTest.cs" t="Include" />
+        <e p="Tests.csproj" t="IncludeRecursive" />
+        <e p="ValidSimulationCheckTest.cs" t="Include" />
+      </e>
+    </e>
+  </component>
+</project>

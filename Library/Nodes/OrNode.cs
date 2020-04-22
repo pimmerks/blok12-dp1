@@ -17,7 +17,7 @@ namespace DP1.Library.Nodes
         {
             if (!input.Any())
             {
-                throw new Exception("An OrNode must contain at least 1 inputs");
+                throw new Exception($"An OrNode must contain at least 1 inputs. Id: {this.NodeId}");
             }
 
             

@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace DP1.Library.File
 {
+    using Exceptions;
+
     public class FileParser
     {
         private const char CommentChar = '#';
@@ -33,14 +35,14 @@ namespace DP1.Library.File
         {
             var parsedText = lines.Select(this.ParseLine).ToList();
             var nodeDefinitions =
-                parsedText.Where(x => x is NodeDefinition)
-                .Select(x => x as NodeDefinition)
-                .ToList();
+                parsedText
+                    .OfType<NodeDefinition>()
+                    .ToList();
 
             var connectionDefinitions =
-                parsedText.Where(x => x is NodeConnectionDefinition)
-                .Select(x => x as NodeConnectionDefinition)
-                .ToList();
+                parsedText
+                    .OfType<NodeConnectionDefinition>()
+                    .ToList();
 
             // TODO: Duplicate entries?
 
@@ -69,13 +71,13 @@ namespace DP1.Library.File
 
             if (!(trimmed.Contains(":") && trimmed.Contains(";")))
             {
-                throw new Exception("Line must contain ':' and ';'");
+                throw new LineParseException("Line must contain ':' and ';'", trimmed);
             }
 
             var split = trimmed.Split(':');
             if (split.Count() != 2)
             {
-                throw new Exception("Line can only contain 1 ':'");
+                throw new LineParseException("Line can only contain 1 ':'", trimmed);
             }
 
             var p1 = split[0].Trim();
@@ -83,7 +85,7 @@ namespace DP1.Library.File
 
             if (string.IsNullOrWhiteSpace(p1) || string.IsNullOrWhiteSpace(p2))
             {
-                throw new Exception("One or more of the variables are empty.");
+                throw new LineParseException("One or more of the variables are empty.", trimmed);
             }
 
             if (ParsedLine.NodeTypes.Contains(p2))
@@ -92,12 +94,9 @@ namespace DP1.Library.File
             }
 
             var p2Split = p2.Split(',');
-            foreach (var s in p2Split)
+            if (p2Split.Any(string.IsNullOrWhiteSpace))
             {
-                if (string.IsNullOrWhiteSpace(s))
-                {
-                    throw new Exception("One or more of the output nodes is empty.");
-                }
+                throw new LineParseException("One or more of the output nodes is empty.", trimmed);
             }
 
             return new NodeConnectionDefinition(p1, p2.Split(',').ToList());

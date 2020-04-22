@@ -15,7 +15,7 @@
 
         public override string ToString()
         {
-            return $"{LogicState}";
+            return $"{this.LogicState}";
         }
     }
 }

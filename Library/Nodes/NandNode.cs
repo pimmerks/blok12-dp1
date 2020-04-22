@@ -14,8 +14,8 @@ namespace DP1.Library.Nodes
         public NandNode(string nodeId)
             : base(nodeId)
         {
-            notNode = new NotNode(nodeId + "-Not");
-            andNode = new AndNode(nodeId + "-And");
+            this.notNode = new NotNode(nodeId + "-Not");
+            this.andNode = new AndNode(nodeId + "-And");
         }
 
         /// <inheritdoc />
@@ -23,15 +23,15 @@ namespace DP1.Library.Nodes
         {
             if (!input.Any() || input.Length < 1)
             {
-                throw new Exception("An NandNode must contain at least 2 inputs");
+                throw new Exception($"An NandNode must contain at least 2 inputs. Id: {this.NodeId}");
             }
 
-            andNode.Calculate(input);
-            notNode.Calculate(andNode.CurrentState);
+            this.andNode.Calculate(input);
+            this.notNode.Calculate(this.andNode.CurrentState);
 
             this.CurrentState = new State
             {
-                LogicState = notNode.CurrentState.LogicState
+                LogicState = this.notNode.CurrentState.LogicState
             };
         }
     }

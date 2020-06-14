@@ -1,16 +1,10 @@
-﻿namespace Tests
+﻿namespace DP1.Tests
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Xunit;
 
-    [TestClass]
     public class SimulationFacadeTest
     {
-        [TestMethod]
+        [Fact]
         public void SmallFileTest()
         {
         }

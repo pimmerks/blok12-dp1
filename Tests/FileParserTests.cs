@@ -1,112 +1,132 @@
-﻿using DP1.Library.File;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
-
-namespace DP1.Tests
+﻿namespace DP1.Tests
 {
-    [TestClass]
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Library.Exceptions;
+    using Library.File;
+    using Xunit;
+
     public class FileParserTests
     {
-        [TestMethod]
+        [Fact]
         public void ParseNodeDefinitionLineTest()
         {
             var line = "IN: INPUT_HIGH; # test";
             var fp = new FileParser();
             var output = fp.ParseLine(line);
 
-            Assert.IsInstanceOfType(output, typeof(NodeDefinition));
+            Assert.IsType<NodeDefinition>(output);
 
             var o = output as NodeDefinition;
 
-            Assert.AreEqual("IN", o.NodeId);
-            Assert.AreEqual("INPUT_HIGH", o.NodeType);
+            Assert.NotNull(o);
+
+            Assert.Equal("IN", o.NodeId);
+            Assert.Equal("INPUT_HIGH", o.NodeType);
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseNodeConnectionDefinitionLineTest()
         {
             var line = "NODE1: NODE2,NODE3; # test";
             var fp = new FileParser();
             var output = fp.ParseLine(line);
 
-            Assert.IsInstanceOfType(output, typeof(NodeConnectionDefinition));
+            Assert.IsType<NodeConnectionDefinition>(output);
 
             var o = output as NodeConnectionDefinition;
-
-            Assert.AreEqual("NODE1", o.InputNode);
-            Assert.AreEqual("NODE2", o.OutputNodes[0]);
-            Assert.AreEqual("NODE3", o.OutputNodes[1]);
+            
+            Assert.Equal("NODE1", o.InputNode);
+            Assert.Equal("NODE2", o.OutputNodes[0]);
+            Assert.Equal("NODE3", o.OutputNodes[1]);
+        }
+        
+        [Fact]
+        public void ReadFileLinesFileNotFoundTest()
+        {
+            var file = "";
+            var fp = new FileParser();
+            Assert.Throws<FileNotFoundException>(() => fp.ReadFileLines(file));
+        }
+        
+        [Fact]
+        public void ReadFileLinesTest()
+        {
+            var file = Path.Join(Environment.CurrentDirectory, "test-circuit1.txt");
+            var fp = new FileParser();
+            var lines = fp.ReadFileLines(file);
+            Assert.Equal(42, lines.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseIncorrectLine1Test()
         {
             var line = "NODE1: NODE2,NODE3 # test";
             var fp = new FileParser();
-            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+            Assert.Throws<LineParseException>(() => fp.ParseLine(line));
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseIncorrectLine2Test()
         {
             var line = "NP1: INPUT_F";
             var fp = new FileParser();
-            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+            Assert.Throws<LineParseException>(() => fp.ParseLine(line));
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseIncorrectLine3Test()
         {
             var line = "NODE1:; # test";
             var fp = new FileParser();
-            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+            Assert.Throws<LineParseException>(() => fp.ParseLine(line));
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseIncorrectLine4Test()
         {
             var line = "NODE1:TEST,; # test";
             var fp = new FileParser();
-            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+            Assert.Throws<LineParseException>(() => fp.ParseLine(line));
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseIncorrectLine5Test()
         {
             var line = "NODE1:TEST:TEST; # test";
             var fp = new FileParser();
-            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+            Assert.Throws<LineParseException>(() => fp.ParseLine(line));
         }
 
-        [TestMethod]
+        [Fact]
         public void ParseDuplicateNodeTest()
         {
             var line = "NODE1:TEST,TEST; # test";
             var fp = new FileParser();
-            Assert.ThrowsException<Exception>(() => fp.ParseLine(line));
+            Assert.Throws<DuplicateNodeException>(() => fp.ParseLine(line));
         }
 
-        [TestMethod]
+        [Fact]
         public void SmallInputFileTest()
         {
             var lines = FileParserTestInputData.SmallInput.Split(Environment.NewLine.ToCharArray());
             var fp = new FileParser();
             var o = fp.ParseLines(lines.ToList());
 
-            Assert.AreEqual(3, o.nodeDefinitions.Count);
-            Assert.AreEqual(2, o.nodeConnectionDefinitions.Count);
+            Assert.Equal(3, o.nodeDefinitions.Count);
+            Assert.Equal(2, o.nodeConnectionDefinitions.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void MainInputFileTest()
         {
             var lines = FileParserTestInputData.MainInputFile.Split(Environment.NewLine.ToCharArray());
             var fp = new FileParser();
             var o = fp.ParseLines(lines.ToList());
 
-            Assert.AreEqual(16, o.nodeDefinitions.Count);
-            Assert.AreEqual(14, o.nodeConnectionDefinitions.Count);
+            Assert.Equal(16, o.nodeDefinitions.Count);
+            Assert.Equal(14, o.nodeConnectionDefinitions.Count);
         }
     }
 }

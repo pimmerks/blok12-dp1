@@ -1,16 +1,15 @@
-﻿using DP1.Library;
-using DP1.Library.Nodes;
-using DP1.Library.Simulation;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace DP1.Tests
+﻿namespace DP1.Tests
 {
-    [TestClass]
+    using System.Collections.Generic;
+    using System.Linq;
+    using Library;
+    using Library.Nodes;
+    using Library.Simulation;
+    using Xunit;
+
     public class NodeConnectionTests
     {
-        [TestMethod]
+        [Fact]
         public void NodeConnectionTest()
         {
             var inputNode = new InputNode("in", new State(true));
@@ -20,10 +19,10 @@ namespace DP1.Tests
 
             var state = nodeConnection.GetResultFromOutputNode();
 
-            Assert.IsTrue(state.LogicState);
+            Assert.True(state.LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void NodeConnectionWithNotNodeTest()
         {
             var inputNode = new InputNode("in", new State(true));
@@ -54,7 +53,7 @@ namespace DP1.Tests
 
             nodeConnections[1].GetResultFromOutputNode();
 
-            Assert.IsFalse(nodeConnections[1].OutputNode.CurrentState.LogicState);
+            Assert.False(nodeConnections[1].OutputNode.CurrentState.LogicState);
         }
     }
 }

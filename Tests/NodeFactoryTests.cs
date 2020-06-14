@@ -1,83 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DP1.Library.Factories;
-using DP1.Library.Nodes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace DP1.Tests
+﻿namespace DP1.Tests
 {
-    [TestClass]
+    using System;
+    using Library.Factories;
+    using Library.File;
+    using Library.Nodes;
+    using Xunit;
+
     public class NodeFactoryTests
     {
         NodeFactory nodeFactory;
         public NodeFactoryTests()
         {
-            nodeFactory = new NodeFactory();
-    }
+            this.nodeFactory = NodeFactory.Instance;
+        }
+        
+        [Theory]
+        [InlineData("PROBE", typeof(OutputNode))] // Do not test input nodes here...
+        [InlineData("AND", typeof(AndNode))]
+        [InlineData("OR", typeof(OrNode))]
+        [InlineData("NOT", typeof(NotNode))]
+        [InlineData("NAND", typeof(NandNode))]
+        [InlineData("NOR", typeof(NorNode))]
+        [InlineData("XOR", typeof(XorNode))]
+        public void NodeFactoryShouldCreateCorrectNode(string nodeType, Type expectedType)
+        {
+            var node = this.nodeFactory.CreateNode(nodeType, nodeType);
 
-        [TestMethod]
+            Assert.Equal(nodeType, node.NodeId);
+            Assert.IsType(expectedType, node);
+            Assert.Throws<Exception>(() => node.Calculate());
+        }
+
+        [Fact]
         public void CreateInputNodeTest()
         {
-            var inputNodeLow = nodeFactory.CreateNode("Input_Low", "INPUT_LOW");
-            var inputNodeHigh = nodeFactory.CreateNode("Input_High", "INPUT_HIGH");
+            var inputNodeLow = this.nodeFactory.CreateNode("Input_Low", "INPUT_LOW");
+            var inputNodeHigh = this.nodeFactory.CreateNode("Input_High", "INPUT_HIGH");
 
-            Assert.IsFalse(inputNodeLow.CurrentState.LogicState);
-            Assert.IsTrue(inputNodeHigh.CurrentState.LogicState);
-            Assert.AreEqual("Input_Low", inputNodeLow.NodeId);
-            Assert.AreEqual("Input_High", inputNodeHigh.NodeId);
-            Assert.IsInstanceOfType(inputNodeLow, typeof(InputNode));
-            Assert.IsInstanceOfType(inputNodeHigh, typeof(InputNode));
+            Assert.False(inputNodeLow.CurrentState.LogicState);
+            Assert.True(inputNodeHigh.CurrentState.LogicState);
+            Assert.Equal("Input_Low", inputNodeLow.NodeId);
+            Assert.Equal("Input_High", inputNodeHigh.NodeId);
+            Assert.IsType<InputNode>(inputNodeLow);
+            Assert.IsType<InputNode>(inputNodeHigh);
         }
 
-        [TestMethod]
-        public void CreateOutputNodeTest()
-        {
-            var outputNode = nodeFactory.CreateNode("output", "PROBE");
-
-            Assert.AreEqual("output", outputNode.NodeId);
-            Assert.IsInstanceOfType(outputNode, typeof(OutputNode));
-        }
-
-        [TestMethod]
-        public void CreateOrNodeTest()
-        {
-            var orNode = nodeFactory.CreateNode("or", "OR");
-
-            Assert.AreEqual("or", orNode.NodeId);
-            Assert.IsInstanceOfType(orNode, typeof(OrNode));
-        }
-
-        [TestMethod]
-        public void CreateAndNodeTest()
-        {
-            var andNode = nodeFactory.CreateNode("and", "AND");
-
-            Assert.AreEqual("and", andNode.NodeId);
-            Assert.IsInstanceOfType(andNode, typeof(AndNode));
-        }
-
-        [TestMethod]
-        public void CreateNotNodeTest()
-        {
-            var notNode = nodeFactory.CreateNode("not", "NOT");
-
-            Assert.AreEqual("not", notNode.NodeId);
-            Assert.IsInstanceOfType(notNode, typeof(NotNode));
-        }
-
-        [TestMethod]
+        [Fact]
         public void CreateUnsupportedNodeTypeTest()
         {
-            Assert.ThrowsException<ArgumentException>(() => nodeFactory.CreateNode("UnsupportedNode", ""));
+            Assert.Throws<ArgumentException>(() => this.nodeFactory.CreateNode("UnsupportedNode", ""));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateNodeWithoutIdTest()
         {
-            Assert.ThrowsException<ArgumentException>(() => nodeFactory.CreateNode("", "PROBE"));
+            Assert.Throws<ArgumentException>(() => this.nodeFactory.CreateNode("", "PROBE"));
+        }
+
+        [Fact]
+        public void CreateNodeFromDefinitionTest()
+        {
+            var def = new NodeDefinition("id", "OR");
+            var node = this.nodeFactory.CreateNode(def);
+
+            Assert.Equal("id", node.NodeId);
+            Assert.IsType<OrNode>(node);
         }
     }
 }

@@ -5,25 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:Dp1WpfApp"
-        xmlns:Converter="clr-namespace:Dp1WpfApp.Converter" x:Class="Dp1WpfApp.MainWindow"
+        xmlns:converter="clr-namespace:Dp1WpfApp.Converter" x:Class="Dp1WpfApp.MainWindow"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="550" Width="1000">
+        Title="{Binding Title}"
+        Height="550"
+        Width="1048.111"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Window.Resources>
-        <Converter:NodeToTypeConverter x:Key="NodeToTypeConverter"/>
+        <converter:StateToColorConverter x:Key="StateToColorConverter"/>
+        <converter:NodeToTypeConverter x:Key="NodeToTypeConverter"/>
     </Window.Resources>
-    <Window.DataContext>
-        <Binding Path="Main" Source="{StaticResource Locator}"/>
-    </Window.DataContext>
+    <!--<Window.DataContext>
+        <Binding Mode="OneWay" Path="Main" Source="{StaticResource Locator}"/>
+    </Window.DataContext>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Button Command="{Binding BrowseCommand}" Content="Browse" HorizontalAlignment="Left" Margin="10,10,0,10" Width="75"/>
-        <Button Command="{Binding LoadFile}" Content="Reload" HorizontalAlignment="Left" Margin="90,10,0,10" Width="75"/>
-        <Label Content="{Binding CurrentFilename}" Margin="170,5,333,5" Height="30" VerticalAlignment="Center"/>
-
-        <Button Command="{Binding ResetAndStart}" Content="(Re)Run simulation" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="130"/>
+        <Button Command="{Binding BrowseCommand}" Content="Browse" HorizontalAlignment="Left" Margin="8,8,0,8" Width="75"/>
+        <Button Command="{Binding LoadFile}" Content="Reload" HorizontalAlignment="Left" Grid.Row="0" Margin="90,8,0,8" Width="75"/>
+        <Label Content="{Binding PropagationDelay}" Grid.Row="0" Margin="170,5,0,5" HorizontalAlignment="Left" Width="231" />
+        <CheckBox IsChecked="{Binding RunSimulationOnUpdate}" Content="Live update nodes" Margin="0,13,143,12" HorizontalAlignment="Right" Width="125" />
+        <Button Command="{Binding ResetAndStart}" Content="(Re)Run simulation" Grid.Row="0" Margin="0,8,8,8" HorizontalAlignment="Right" Width="130"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -32,7 +36,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Input nodes" Grid.Column="0" Margin="10,10,10,0" VerticalAlignment="Top" Height="25"/>
-            <ListView ItemsSource="{Binding InputNodes}" Grid.Column="0" Margin="10,40,10,10" x:Name="ListViewInputNodes">
+            <ListView ItemsSource="{Binding InputNodes}" Grid.Column="0" Margin="10,40,10,10" x:Name="ListViewInputNodes" Foreground="Black">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
@@ -49,15 +53,26 @@
                     </GridView>
                 </ListView.View>
 
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="False">
+                                <Setter Property="Background" Value="Red" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentState}" Value="True">
+                                <Setter Property="Background" Value="Green" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
             </ListView>
-
 
             <Label Content="Node Connections" Grid.Column="1" Margin="10,10,10,0" VerticalAlignment="Top" Height="25"/>
             <ListView ItemsSource="{Binding NodeConnections}" Grid.Column="1" Margin="10,40,10,10">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel>
-                            <TextBlock Text="{Binding OutputNode.NodeId}" Width="60" FontWeight="Bold" />
+                            <TextBlock Text="{Binding OutputNode.NodeId}" Width="60" FontWeight="Bold" Foreground="{Binding OutputNode.CurrentState, Converter={StaticResource StateToColorConverter}, Mode=OneWay}" />
                             <TextBlock Text="{Binding OutputNode, Converter={StaticResource NodeToTypeConverter}}" Width="70"/>
                             <TextBlock Text="Inputs:" Margin="5,0" FontWeight="Bold"/>
                             <ListView ItemsSource="{Binding InputNodes}">
@@ -76,17 +91,27 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-
             <Label Content="Output nodes" Grid.Column="2" Margin="10,10,10,0" VerticalAlignment="Top" Height="25"/>
-            <ListView ItemsSource="{Binding OutputState}" Grid.Column="2" Margin="10,40,10,10">
+            <ListView ItemsSource="{Binding OutputState}" Grid.Column="2" Margin="10,40,10,10" Foreground="Black">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Key}" />
                         <GridViewColumn Header="State" Width="100" DisplayMemberBinding="{Binding Value}" />
                     </GridView>
                 </ListView.View>
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Value.LogicState}" Value="False">
+                                <Setter Property="Background" Value="Red" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Value.LogicState}" Value="True">
+                                <Setter Property="Background" Value="Green" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
             </ListView>
         </Grid>
-        <Label Content="{Binding PropegationDelay}" Margin="664,5,145,5" Height="30" VerticalAlignment="Center"/>
     </Grid>
 </Window>

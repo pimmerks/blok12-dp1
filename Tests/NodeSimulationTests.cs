@@ -1,17 +1,16 @@
-﻿using DP1.Library;
-using DP1.Library.Nodes;
-using DP1.Library.Simulation;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-
-namespace DP1.Tests
+﻿namespace DP1.Tests
 {
-    [TestClass]
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Library;
+    using Library.Nodes;
+    using Library.Simulation;
+    using Xunit;
+
     public class NodeSimulationTests
     {
-        [TestMethod]
+        [Fact]
         public void NotNodeTest()
         {
             var inputNode = new InputNode("in", new State(true));
@@ -34,10 +33,10 @@ namespace DP1.Tests
             simulation.RunSimulation();
 
             var output = simulation.GetOutputState();
-            Assert.IsFalse(output["out"].LogicState);
+            Assert.False(output["out"].LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void NotNotNodeTest()
         {
             var inputNode = new InputNode("in", new State(true));
@@ -62,10 +61,10 @@ namespace DP1.Tests
             simulation.RunSimulation();
 
             var output = simulation.GetOutputState();
-            Assert.IsTrue(output["out"].LogicState);
+            Assert.True(output["out"].LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void AndNodeTest()
         {
             var inputNode1 = new InputNode("in1", new State(true));
@@ -94,10 +93,10 @@ namespace DP1.Tests
             simulation.RunSimulation();
 
             var output = simulation.GetOutputState();
-            Assert.IsTrue(output["out"].LogicState);
+            Assert.True(output["out"].LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void AndFalseNodeTest()
         {
             var inputNode1 = new InputNode("in1", new State(false));
@@ -126,10 +125,10 @@ namespace DP1.Tests
             simulation.RunSimulation();
 
             var output = simulation.GetOutputState();
-            Assert.IsFalse(output["out"].LogicState);
+            Assert.False(output["out"].LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void OrNodeTest()
         {
             var inputNode1 = new InputNode("in1", new State(false));
@@ -158,10 +157,10 @@ namespace DP1.Tests
             simulation.RunSimulation();
 
             var output = simulation.GetOutputState();
-            Assert.IsTrue(output["out"].LogicState);
+            Assert.True(output["out"].LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateSimulationTest()
         {
             var inputNode1 = new InputNode("in1", new State(false));
@@ -187,10 +186,11 @@ namespace DP1.Tests
 
             var simulation = new NodeSimulation(nodeConnections);
             
-            CollectionAssert.AreEqual(nodeConnections, simulation.NodeConnections);
+            // TODO: Is this the same as CollectionAssert?
+            Assert.Equal(nodeConnections, simulation.NodeConnections);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResetSimulationTest()
         {
             var inputNode1 = new InputNode("in1", new State(false));
@@ -220,10 +220,10 @@ namespace DP1.Tests
             simulation.ResetSimulation();
 
             var output = simulation.GetOutputState();
-            Assert.IsNull(output["out"]);
+            Assert.Null(output["out"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void SetInputsTest()
         {
             var inputNode1 = new InputNode("in1");
@@ -257,11 +257,11 @@ namespace DP1.Tests
 
             simulation.SetInputs(inputValues);
 
-            Assert.IsTrue(simulation.GetInputNodes().Where(x => x.NodeId == inputNode1.NodeId).Single().CurrentState.LogicState);
-            Assert.IsFalse(simulation.GetInputNodes().Where(x => x.NodeId == inputNode2.NodeId).Single().CurrentState.LogicState);
+            Assert.True(simulation.GetInputNodes().Where(x => x.NodeId == inputNode1.NodeId).Single().CurrentState.LogicState);
+            Assert.False(simulation.GetInputNodes().Where(x => x.NodeId == inputNode2.NodeId).Single().CurrentState.LogicState);
         }
 
-        [TestMethod]
+        [Fact]
         public void SetInvalidAmountInputsTest()
         {
             var inputNode1 = new InputNode("in1");
@@ -294,7 +294,17 @@ namespace DP1.Tests
                 { orNode.NodeId, new State(false) }
             };
 
-            Assert.ThrowsException<ArgumentException>(() => simulation.SetInputs(inputValues));
+            Assert.Throws<ArgumentException>(() => simulation.SetInputs(inputValues));
+        }
+
+        [Fact]
+        public void BuilderTest()
+        {
+            var builder = NodeSimulationBuilder.GetBuilder();
+            Assert.Throws<ArgumentNullException>(() => builder.AddNodeConnections(null));
+            var sim = builder.Build();
+            
+            Assert.NotNull(sim);
         }
     }
 }

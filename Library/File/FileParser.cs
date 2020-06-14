@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DP1.Library.File
 {
+    using System.IO;
     using Exceptions;
 
     public class FileParser
@@ -17,12 +18,12 @@ namespace DP1.Library.File
         /// <returns>A list of lines.</returns>
         public List<string> ReadFileLines(string path)
         {
-            if (!System.IO.File.Exists(path))
+            if (!File.Exists(path))
             {
-                throw new Exception($"File {path} does not exist!");
+                throw new FileNotFoundException($"File {path} does not exist!", path);
             }
 
-            return System.IO.File.ReadAllLines(path).ToList();
+            return File.ReadAllLines(path).ToList();
         }
 
         /// <summary>

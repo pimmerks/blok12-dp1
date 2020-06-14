@@ -25,11 +25,11 @@ namespace Dp1WpfApp.ViewModel
         {
             if (IsInDesignMode)
             {
-                // Code runs in Blend --> create design time data.
+                this.CurrentFilename = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "");
+                this.RaisePropertyChanged(nameof(CurrentFilename));
             }
             else
             {
-                // Code runs "for real"
             }
         }
 
@@ -45,7 +45,9 @@ namespace Dp1WpfApp.ViewModel
 
         public List<NodeConnection> NodeConnections => this.CurrentSimulation?.NodeConnections;
 
-        public string PropegationDelay => $"Delay time: {this.CurrentSimulation?.DelayTime} * 15ns = {this.CurrentSimulation?.DelayTime * 15}ns";
+        public string PropagationDelay => $"Delay time: {this.CurrentSimulation?.DelayTime} * 15ns = {this.CurrentSimulation?.DelayTime * 15}ns";
+
+        public bool RunSimulationOnUpdate { get; set; } = true;
 
         /// <summary>
         /// Opens a file browser to display the files.
@@ -53,18 +55,19 @@ namespace Dp1WpfApp.ViewModel
         public ICommand BrowseCommand => new RelayCommand(() => 
         {
             this.Title = "File chooser...";
-            var dg = new OpenFileDialog();
-
-            dg.DefaultExt = ".txt";
-            dg.Filter = "Circuit files (*.txt)|*.txt|All files (*.*)|*.*";
-            dg.InitialDirectory = Directory.GetCurrentDirectory();
+            var dg = new OpenFileDialog
+            {
+                DefaultExt = ".txt",
+                Filter = "Circuit files (*.txt)|*.txt|All files (*.*)|*.*",
+                InitialDirectory = Directory.GetCurrentDirectory()
+            };
 
             var result = dg.ShowDialog();
             
             if (result == true)
             {
                 this.CurrentFilename = dg.FileName;
-                this.Title = $"DP1 {this.CurrentFilename}";
+                this.Title = $"DP1 - {this.CurrentFilename}";
             }
 
             if (this.LoadFile.CanExecute(null))
@@ -91,7 +94,7 @@ namespace Dp1WpfApp.ViewModel
             var lines = fp.ReadFileLines(path);
             var (nodeDefinitions, nodeConnectionDefinitions) = fp.ParseLines(lines);
 
-            var nodeFactory = new NodeFactory();
+            var nodeFactory = NodeFactory.Instance;
             var nodeConFactory = new NodeConnectionFactory();
 
             // Convert definitions to nodes
@@ -139,9 +142,14 @@ namespace Dp1WpfApp.ViewModel
         /// </summary>
         public ICommand SetNewState => new RelayCommand<InputNode>((node) =>
         {
-            // Open dialog to define new state.
             this.CurrentSimulation.SetInputs(new Dictionary<string, State>() { { node.NodeId, new State(!node.CurrentState.LogicState) } });
             this.RaisePropertyChanged(nameof(this.InputNodes));
+            this.RaisePropertyChanged(nameof(this.NodeConnections));
+
+            if (this.RunSimulationOnUpdate && this.ResetAndStart.CanExecute(null))
+            {
+                this.ResetAndStart.Execute(null);
+            }
         });
     }
 }

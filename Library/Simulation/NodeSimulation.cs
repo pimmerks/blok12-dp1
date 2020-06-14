@@ -26,7 +26,7 @@
                 throw new ArgumentException();
             }
 
-            foreach (KeyValuePair<string, State> state in states)
+            foreach (var state in states)
             {
                 inputNodes.Single(x => x.NodeId == state.Key).SetState(state.Value);
             }
@@ -44,7 +44,7 @@
 
         public void ResetSimulation()
         {
-            foreach(NodeConnection nodeConnection in this.NodeConnections)
+            foreach(var nodeConnection in this.NodeConnections)
             {
                 nodeConnection.OutputNode.ResetState();
             }
@@ -84,7 +84,7 @@
         }
 
         // Check for loops in simulation, returns false for no loops
-        public String ValidSimulationCheck()
+        public string ValidSimulationCheck()
         {
             // Set delay time to 0
             this.DelayTime = 0;
@@ -103,8 +103,22 @@
             if (inputs.Count == 0)
                 return "Simulation contains no input nodes";
 
+            // Check for not connected
+            foreach (var connection in this.NodeConnections)
+            {
+                if (!connection.InputNodes.Any())
+                {
+                    return $"Connection {connection} has no input nodes.";
+                }
+
+                if (connection.OutputNode.GetType() != typeof(OutputNode) && connection.OutputNode == null)
+                {
+                    return $"Connection {connection} has no output node.";
+                }
+            }
+
             // Create a list of paths
-            List<List<NodeConnection>> pathList = new List<List<NodeConnection>>();
+            var pathList = new List<List<NodeConnection>>();
 
             // Add a path for every output
             foreach (var output in outputs)

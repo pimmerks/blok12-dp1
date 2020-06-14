@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace DP1.Library.File
 {
+    using Exceptions;
+
     public class NodeConnectionDefinition : ParsedLine
     {
         public string InputNode { get; }
@@ -15,7 +17,7 @@ namespace DP1.Library.File
             if (outputNodes.GroupBy(x => x).Any(g => g.Count() > 1))
             {
                 // Output nodes contains a duplicate
-                throw new Exception("The output contains duplicate nodes!");
+                throw new DuplicateNodeException("The output contains duplicate nodes!");
             }
 
             this.InputNode = inputNode;

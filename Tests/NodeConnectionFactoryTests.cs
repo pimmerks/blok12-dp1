@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DP1.Library.Factories;
-using DP1.Library.Nodes;
-using DP1.Library.Simulation;
-using DP1.Library;
-using DP1.Library.File;
-
-namespace DP1.Tests
+﻿namespace DP1.Tests
 {
-    [TestClass]
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Library;
+    using Library.Factories;
+    using Library.File;
+    using Library.Nodes;
+    using Library.Simulation;
+    using Xunit;
+
     public class NodeConnectionFactoryTests
     {
         NodeConnectionFactory nodeConnectionFactory;
@@ -20,8 +17,8 @@ namespace DP1.Tests
 
         public NodeConnectionFactoryTests()
         {
-            nodeConnectionFactory = new NodeConnectionFactory();
-            nodes = new List<NodeBase>
+            this.nodeConnectionFactory = new NodeConnectionFactory();
+            this.nodes = new List<NodeBase>
             {
                 new InputNode("IN1", new State(true)),
                 new InputNode("IN2", new State(false)),
@@ -37,7 +34,7 @@ namespace DP1.Tests
             };
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateNodeConnectionTest()
         {
             var inputs = new List<string>
@@ -45,17 +42,18 @@ namespace DP1.Tests
                 "IN2",
                 "OR1"
             };
-            List<NodeBase> inputNodes = nodes.Where(x => inputs.Contains(x.NodeId)).ToList();
+            List<NodeBase> inputNodes = this.nodes.Where(x => inputs.Contains(x.NodeId)).ToList();
 
-            var nodeConnection = nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "AND1");
+            var nodeConnection = this.nodeConnectionFactory.CreateNodeConnection(this.nodes, inputs, "AND1");
 
 
-            Assert.IsInstanceOfType(nodeConnection, typeof(NodeConnection));
-            CollectionAssert.AreEqual(inputNodes, nodeConnection.InputNodes);
-            Assert.AreEqual(nodes.Where(x => x.NodeId == "AND1").Single(), nodeConnection.OutputNode);
+            Assert.IsType<NodeConnection>(nodeConnection);
+            // TODO: Is this the same as CollectionAssert?
+            Assert.Equal(inputNodes, nodeConnection.InputNodes);
+            Assert.Equal(this.nodes.Where(x => x.NodeId == "AND1").Single(), nodeConnection.OutputNode);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateUnrecognizedOutputTest()
         {
             var inputs = new List<string>
@@ -63,10 +61,10 @@ namespace DP1.Tests
                 "IN2",
                 "OR1"
             };
-            Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "UnrecognizedOutput"));
+            Assert.Throws<InvalidOperationException>(() => this.nodeConnectionFactory.CreateNodeConnection(this.nodes, inputs, "UnrecognizedOutput"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateUnrecognizedInputTest()
         {
             var inputs = new List<string>
@@ -74,19 +72,19 @@ namespace DP1.Tests
                 "AND2",
                 "UnrecognizedInput"
             };
-            Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "OUT1"));
+            Assert.Throws<InvalidOperationException>(() => this.nodeConnectionFactory.CreateNodeConnection(this.nodes, inputs, "OUT1"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateEmptyInputTest()
         {
             var inputs = new List<string>
             {
             };
-            Assert.ThrowsException<ArgumentNullException>(() => nodeConnectionFactory.CreateNodeConnection(nodes, inputs, "OUT1"));
+            Assert.Throws<ArgumentException>(() => this.nodeConnectionFactory.CreateNodeConnection(this.nodes, inputs, "OUT1"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateEmptyNodesTest()
         {
             var inputs = new List<string>
@@ -95,10 +93,10 @@ namespace DP1.Tests
                 "OR1"
             };
             var emptyNodes = new List<NodeBase>();
-            Assert.ThrowsException<InvalidOperationException>(() => nodeConnectionFactory.CreateNodeConnection(emptyNodes, inputs, "OUT1"));
+            Assert.Throws<InvalidOperationException>(() => this.nodeConnectionFactory.CreateNodeConnection(emptyNodes, inputs, "OUT1"));
         }
 
-        [TestMethod]
+        [Fact]
         public void Convert1Test()
         {
             var defs = new List<NodeConnectionDefinition>
@@ -110,23 +108,23 @@ namespace DP1.Tests
 
             var nodeConnections = this.nodeConnectionFactory.Convert(this.nodes, defs);
 
-            Assert.AreEqual(4, nodeConnections.Count);
+            Assert.Equal(4, nodeConnections.Count);
 
-            Assert.AreEqual("IN1", nodeConnections[0].InputNodes[0].NodeId);
-            Assert.AreEqual("NOT1", nodeConnections[0].OutputNode.NodeId);
+            Assert.Equal("IN1", nodeConnections[0].InputNodes[0].NodeId);
+            Assert.Equal("NOT1", nodeConnections[0].OutputNode.NodeId);
 
-            Assert.AreEqual("IN1", nodeConnections[1].InputNodes[0].NodeId);
-            Assert.AreEqual("NOT2", nodeConnections[1].OutputNode.NodeId);
+            Assert.Equal("IN1", nodeConnections[1].InputNodes[0].NodeId);
+            Assert.Equal("NOT2", nodeConnections[1].OutputNode.NodeId);
 
 
-            Assert.AreEqual("NOT1", nodeConnections[2].InputNodes[0].NodeId);
-            Assert.AreEqual("OUT1", nodeConnections[2].OutputNode.NodeId);
+            Assert.Equal("NOT1", nodeConnections[2].InputNodes[0].NodeId);
+            Assert.Equal("OUT1", nodeConnections[2].OutputNode.NodeId);
 
-            Assert.AreEqual("NOT2", nodeConnections[3].InputNodes[0].NodeId);
-            Assert.AreEqual("OUT2", nodeConnections[3].OutputNode.NodeId);
+            Assert.Equal("NOT2", nodeConnections[3].InputNodes[0].NodeId);
+            Assert.Equal("OUT2", nodeConnections[3].OutputNode.NodeId);
         }
 
-        [TestMethod]
+        [Fact]
         public void Convert2Test()
         {
             var defs = new List<NodeConnectionDefinition>
@@ -138,14 +136,14 @@ namespace DP1.Tests
 
             var nodeConnections = this.nodeConnectionFactory.Convert(this.nodes, defs);
 
-            Assert.AreEqual(2, nodeConnections.Count);
+            Assert.Equal(2, nodeConnections.Count);
 
-            Assert.AreEqual("IN1", nodeConnections[0].InputNodes[0].NodeId);
-            Assert.AreEqual("IN2", nodeConnections[0].InputNodes[1].NodeId);
-            Assert.AreEqual("AND1", nodeConnections[0].OutputNode.NodeId);
+            Assert.Equal("IN1", nodeConnections[0].InputNodes[0].NodeId);
+            Assert.Equal("IN2", nodeConnections[0].InputNodes[1].NodeId);
+            Assert.Equal("AND1", nodeConnections[0].OutputNode.NodeId);
 
-            Assert.AreEqual("AND1", nodeConnections[1].InputNodes[0].NodeId);
-            Assert.AreEqual("OUT1", nodeConnections[1].OutputNode.NodeId);
+            Assert.Equal("AND1", nodeConnections[1].InputNodes[0].NodeId);
+            Assert.Equal("OUT1", nodeConnections[1].OutputNode.NodeId);
         }
     }
 }

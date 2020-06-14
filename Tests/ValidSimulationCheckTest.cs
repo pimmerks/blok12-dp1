@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using DP1.Library;
-using DP1.Library.Nodes;
-using DP1.Library.Simulation;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tests
+﻿namespace DP1.Tests
 {
-    [TestClass]
+    using System.Collections.Generic;
+    using Library;
+    using Library.Nodes;
+    using Library.Simulation;
+    using Xunit;
+
     public class ValidSimulationCheckTest
     {
-        [TestMethod]
-        public void ValidCheckwithoutinputs()
+        [Fact]
+        public void ValidCheckWithoutInputs()
         {
             var notNode1 = new NotNode("not1");
             var notNode2 = new NotNode("not2");
@@ -28,11 +23,11 @@ namespace Tests
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.AreEqual(simulation.ValidSimulationCheck(), "Simulation contains no input nodes");
+            Assert.Equal("Simulation contains no input nodes", simulation.ValidSimulationCheck());
         }
 
-        [TestMethod]
-        public void ValidCheckwithoutoutputs()
+        [Fact]
+        public void ValidCheckWithoutOutputs()
         {
             var inputNode = new InputNode("in", new State(true));
             var notNode1 = new NotNode("not1");
@@ -51,11 +46,11 @@ namespace Tests
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.AreEqual(simulation.ValidSimulationCheck(), "Simulation contains no output nodes");
+            Assert.Equal("Simulation contains no output nodes",simulation.ValidSimulationCheck());
         }
 
-        [TestMethod]
-        public void ValidCheckwithInvalidPath()
+        [Fact]
+        public void ValidCheckWithInvalidPath()
         {
             var inputNode = new InputNode("in", new State(true));
             var notNode1 = new NotNode("not1");
@@ -75,10 +70,10 @@ namespace Tests
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.AreEqual(simulation.ValidSimulationCheck(), "Path does not end in input node");
+            Assert.Equal("Path does not end in input node", simulation.ValidSimulationCheck());
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidCheckWithLoops()
         {
             var inputNode1 = new InputNode("in1", new State(true));
@@ -104,10 +99,10 @@ namespace Tests
 
             var simulation = new NodeSimulation(nodeConnections);
             
-            Assert.AreEqual(simulation.ValidSimulationCheck(), "Simulation contains loop(s)");
+            Assert.Equal("Simulation contains loop(s)", simulation.ValidSimulationCheck());
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidCheckWithValidSimulation()
         {
             var inputNode = new InputNode("in", new State(true));
@@ -129,7 +124,7 @@ namespace Tests
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.IsNull(simulation.ValidSimulationCheck());
+            Assert.Null(simulation.ValidSimulationCheck());
         }
     }
 }

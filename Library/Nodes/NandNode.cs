@@ -5,6 +5,8 @@ using System.Text;
 
 namespace DP1.Library.Nodes
 {
+    using DP1.Library.Factories;
+
     public class NandNode : NodeBase
     {
         private NotNode notNode;
@@ -16,6 +18,11 @@ namespace DP1.Library.Nodes
         {
             this.notNode = new NotNode(nodeId + "-Not");
             this.andNode = new AndNode(nodeId + "-And");
+        }
+
+        public override void Register(NodeFactory factory)
+        {
+            factory.RegisterNode("NAND", new NandNode(""));
         }
 
         /// <inheritdoc />
@@ -32,6 +39,14 @@ namespace DP1.Library.Nodes
             this.CurrentState = new State
             {
                 LogicState = this.notNode.CurrentState.LogicState
+            };
+        }
+
+        public override NodeBase Clone(string nodeId)
+        {
+            return new NandNode(nodeId)
+            {
+                CurrentState = this.CurrentState,
             };
         }
     }

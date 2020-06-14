@@ -12,9 +12,6 @@
     <e p="C:\Users\pimmer\AppData\Roaming\JetBrains\Rider2020.1\scratches" t="IncludeRecursive" />
     <e p="D:\Git\blok12-dp1" t="IncludeFlat">
       <e p="Blok12-DP1.sln" t="IncludeFlat" />
-      <e p="ConsoleApp" t="IncludeRecursive">
-        <e p="ConsoleApp.csproj" t="IncludeRecursive" />
-      </e>
       <e p="Dp1WpfApp" t="IncludeRecursive">
         <e p="advanced-input.txt" t="Include" />
         <e p="App.config" t="Include" />
@@ -80,6 +77,7 @@
           <e p="NodeFactory.cs" t="Include" />
         </e>
         <e p="File" t="Include">
+          <e p="FileFacade.cs" t="Include" />
           <e p="FileParser.cs" t="Include" />
           <e p="NodeConnectionDefinition.cs" t="Include" />
           <e p="NodeDefinition.cs" t="Include" />
@@ -87,6 +85,8 @@
         </e>
         <e p="Interfaces" t="Include">
           <e p="IClonableNode.cs" t="Include" />
+          <e p="IVisitable.cs" t="Include" />
+          <e p="IVisitor.cs" t="Include" />
         </e>
         <e p="Library.csproj" t="IncludeRecursive" />
         <e p="Nodes" t="Include">

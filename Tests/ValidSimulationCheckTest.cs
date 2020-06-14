@@ -1,6 +1,7 @@
 ﻿namespace DP1.Tests
 {
     using System.Collections.Generic;
+    using DP1.Library.Exceptions;
     using Library;
     using Library.Nodes;
     using Library.Simulation;
@@ -23,7 +24,8 @@
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.Equal("Simulation contains no input nodes", simulation.ValidSimulationCheck());
+            Assert.Throws<NoInputNodesException>(() => simulation.ValidSimulationCheck());
+            // Assert.Equal("Simulation contains no input nodes", simulation.ValidSimulationCheck());
         }
 
         [Fact]
@@ -46,7 +48,7 @@
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.Equal("Simulation contains no output nodes",simulation.ValidSimulationCheck());
+            Assert.Throws<NoOutputNodesException>(() => simulation.ValidSimulationCheck());
         }
 
         [Fact]
@@ -70,7 +72,8 @@
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.Equal("Path does not end in input node", simulation.ValidSimulationCheck());
+            
+            Assert.Throws<PathException>(() => simulation.ValidSimulationCheck());
         }
 
         [Fact]
@@ -99,7 +102,7 @@
 
             var simulation = new NodeSimulation(nodeConnections);
             
-            Assert.Equal("Simulation contains loop(s)", simulation.ValidSimulationCheck());
+            Assert.Throws<PathException>(() => simulation.ValidSimulationCheck());
         }
 
         [Fact]
@@ -124,7 +127,7 @@
 
             var simulation = new NodeSimulation(nodeConnections);
 
-            Assert.Null(simulation.ValidSimulationCheck());
+            simulation.ValidSimulationCheck();
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿namespace DP1.Library.Nodes
 {
     using DP1.Library.Factories;
+    using DP1.Library.Interfaces;
 
-    public abstract class NodeBase : Interfaces.IClonableNode<NodeBase>
+    public abstract class NodeBase : Interfaces.IClonableNode<NodeBase>, IVisitable
     {
         public NodeBase(string nodeId)
         {
@@ -34,5 +35,10 @@
         public State CurrentState { get; protected set; }
         
         public abstract NodeBase Clone(string newId);
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

@@ -62,5 +62,10 @@
         {
             this.nodeTypes.Add(nodeType, node);
         }
+
+        public bool ContainsType(string type)
+        {
+            return this.nodeTypes.ContainsKey(type) || InputNodeFactory.Instance.ContainsType(type);
+        }
     }
 }

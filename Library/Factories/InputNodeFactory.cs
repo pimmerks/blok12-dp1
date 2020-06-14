@@ -21,5 +21,10 @@
                     throw new ArgumentException($"Node type not found. Error thrown for node: {id}.");
             }
         }
+
+        public bool ContainsType(string type)
+        {
+            return type == "INPUT_LOW" || type == "INPUT_HIGH";
+        }
     }
 }

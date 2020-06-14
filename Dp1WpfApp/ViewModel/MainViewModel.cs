@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 
 namespace Dp1WpfApp.ViewModel
 {
+    using System;
+
     public class MainViewModel : ViewModelBase
     {
         /// <summary>
@@ -81,61 +83,68 @@ namespace Dp1WpfApp.ViewModel
         /// </summary>
         public ICommand LoadFile => new RelayCommand(() =>
         {
-            if (!File.Exists(this.CurrentFilename))
+            // if (!File.Exists(this.CurrentFilename))
+            // {
+            //     MessageBox.Show($"The file {this.CurrentFilename} does not exist!");
+            //     this.CurrentSimulation = null;
+            //     return;
+            // }
+            //
+            // var path = this.CurrentFilename;
+            //
+            // var fp = new FileParser();
+            // var lines = fp.ReadFileLines(path);
+            // var (nodeDefinitions, nodeConnectionDefinitions) = fp.ParseLines(lines);
+            //
+            // var nodeFactory = NodeFactory.Instance;
+            // var nodeConFactory = new NodeConnectionFactory();
+            //
+            // // Convert definitions to nodes
+            // var nodes = nodeDefinitions.Select(nodeFactory.CreateNode).ToList();
+            //
+            // // And node connections
+            // var nodeConnections =
+            //     nodeConFactory.Convert(nodes, nodeConnectionDefinitions);
+
+            var nodeConnections = new List<NodeConnection>();
+            
+            try
+            {
+                nodeConnections = FileFacade.GetNodeConnectionsFromFile(this.CurrentFilename);
+            }
+            catch (Exception e)
             {
                 MessageBox.Show($"The file {this.CurrentFilename} does not exist!");
                 this.CurrentSimulation = null;
                 return;
             }
 
-            var path = this.CurrentFilename;
-
-            var fp = new FileParser();
-            var lines = fp.ReadFileLines(path);
-            var (nodeDefinitions, nodeConnectionDefinitions) = fp.ParseLines(lines);
-
-            var nodeFactory = NodeFactory.Instance;
-            var nodeConFactory = new NodeConnectionFactory();
-
-            // Convert definitions to nodes
-            var nodes = nodeDefinitions.Select(nodeFactory.CreateNode).ToList();
-
-            // And node connections
-            var nodeConnections =
-                nodeConFactory.Convert(nodes, nodeConnectionDefinitions);
-
             var sim = NodeSimulationBuilder.GetBuilder()
                         .AddNodeConnections(nodeConnections)
                         .Build();
 
-            var check = sim.ValidSimulationCheck();
-            if (!string.IsNullOrWhiteSpace(check))
+            try
             {
-                MessageBox.Show(check);
+                sim.ValidSimulationCheck();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                MessageBox.Show(e.Message, e.GetType().Name);
                 this.CurrentSimulation = null;
                 return;
             }
 
             this.CurrentSimulation = sim;
-        }, 
-            () =>
-        {
-            if (string.IsNullOrWhiteSpace(this.CurrentFilename))
-            {
-                return false;
-            }
-            return true;
-        });
+
+        }, () => !string.IsNullOrWhiteSpace(this.CurrentFilename));
 
         public ICommand ResetAndStart => new RelayCommand(() =>
         {
             this.CurrentSimulation.ResetSimulation();
             this.CurrentSimulation.RunSimulation();
             this.RaisePropertyChanged(nameof(this.OutputState));
-        }, () =>
-        {
-            return this.CurrentSimulation != null;
-        });
+        }, () => this.CurrentSimulation != null);
 
         /// <summary>
         /// Sets the new state

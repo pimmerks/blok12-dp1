@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using DP1.Library.Exceptions;
 
     public class NodeSimulation
     {
@@ -84,7 +85,7 @@
         }
 
         // Check for loops in simulation, returns false for no loops
-        public string ValidSimulationCheck()
+        public void ValidSimulationCheck()
         {
             // Set delay time to 0
             this.DelayTime = 0;
@@ -97,53 +98,43 @@
 
             // Check if Simulation contains output nodes
             if (outputs.Count == 0)
-                return "Simulation contains no output nodes";
+                throw new NoOutputNodesException("Simulation contains no output nodes");
 
             // Check if Simulation contains input nodes
             if (inputs.Count == 0)
-                return "Simulation contains no input nodes";
+                throw new NoInputNodesException("Simulation contains no input nodes");
 
             // Check for not connected
             foreach (var connection in this.NodeConnections)
             {
                 if (!connection.InputNodes.Any())
                 {
-                    return $"Connection {connection} has no input nodes.";
+                    throw new InvalidConnectionException($"Connection {connection} has no input nodes.");
                 }
 
                 if (connection.OutputNode.GetType() != typeof(OutputNode) && connection.OutputNode == null)
                 {
-                    return $"Connection {connection} has no output node.";
+                    throw new InvalidConnectionException($"Connection {connection} has no output node.");
                 }
             }
 
             // Create a list of paths
-            var pathList = new List<List<NodeConnection>>();
+            var pathList = outputs.Select(output => new List<NodeConnection> { output }).ToList();
 
             // Add a path for every output
-            foreach (var output in outputs)
-            {
-                pathList.Add(new List<NodeConnection> { output });
-            }
 
             // Check the paths for loops
             var remainingNodes = true;
-            var loopsCheck = "";
             while (remainingNodes)
             {
                 // Create a new temp list so the paths can be edited during the foreach loop
                 var tempPathList = new List<List<NodeConnection>>(pathList);
-                loopsCheck = this.ValidPathCheck(pathList, tempPathList);
-
-                // If there are no more nodes left the while loop will stop
-                if(loopsCheck != "Next nodes check") remainingNodes = false;
+                remainingNodes = this.ValidPathCheck(pathList, tempPathList);
             }
-
-            return loopsCheck;
         }
 
         // Check for loops in path, returns false for no loops
-        private String ValidPathCheck(List<List<NodeConnection>> pathList, List<List<NodeConnection>> tempPathList)
+        private bool ValidPathCheck(List<List<NodeConnection>> pathList, List<List<NodeConnection>> tempPathList)
         {
             foreach (var path in tempPathList)
             {
@@ -160,14 +151,18 @@
                     foreach(var inputNode in currentNode.InputNodes)
                     {
                         if(inputNode.GetType() != typeof(InputNode))
-                            return "Path does not end in input node";
+                            throw new PathException("Path does not end in input node");
                     }
                 }
 
                 foreach (var input in inputs)
                 {
                     // If the node already exists in the current path a loop has been found
-                    if (path.Contains(input)) return "Simulation contains loop(s)";
+                    if (path.Contains(input))
+                    {
+                        throw new PathException("Simulation contains loop(s)");
+                        // return "Simulation contains loop(s)";
+                    }
                     else
                     {
                         // Create a new path for every new node
@@ -178,15 +173,12 @@
                 // Check if path is the longest path
                 if (this.DelayTime < path.Count()) this.DelayTime = path.Count();
 
-                // Remove the obsolute path
+                // Remove the obsolete path
                 pathList.Remove(path);
             }
 
             // If any path still remains continue with next set of nodes
-            if (pathList.Count() > 0) return "Next nodes check";
-
-            // If no loops have been found return false
-            return null;
+            return pathList.Any();
         }
     }
 }

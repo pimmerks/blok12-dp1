@@ -5,6 +5,7 @@ using System.Linq;
 namespace DP1.Library.File
 {
     using System.IO;
+    using DP1.Library.Factories;
     using Exceptions;
 
     public class FileParser
@@ -89,7 +90,8 @@ namespace DP1.Library.File
                 throw new LineParseException("One or more of the variables are empty.", trimmed);
             }
 
-            if (ParsedLine.NodeTypes.Contains(p2))
+            if (NodeFactory.Instance.ContainsType(p2))
+                //if (ParsedLine.NodeTypes.Contains(p2))
             {
                 return new NodeDefinition(p1, p2);
             }

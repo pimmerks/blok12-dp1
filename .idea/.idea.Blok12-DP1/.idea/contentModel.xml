@@ -65,7 +65,6 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="ClassDiagram" t="Include">
           <e p="ClassDiagram.cd" t="Include" />
-          <e p="ClassDiagram2.cd" t="Include" />
         </e>
         <e p="Exceptions" t="Include">
           <e p="DuplicateNodeException.cs" t="Include" />

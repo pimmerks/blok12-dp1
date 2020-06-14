@@ -1,23 +1,21 @@
 ﻿using DP1.Library.Nodes;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace Dp1WpfApp.Converter
 {
-    public class NodeToTypeConverter : IValueConverter
+    public class ListToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.GetType().IsSubclassOf(typeof(NodeBase)))
+            if (!(value is List<NodeBase> list))
             {
-                return value.GetType().Name;
+                return "";
             }
-
-            return "";
+            return string.Join(", ", list.Select(x => x.NodeId));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

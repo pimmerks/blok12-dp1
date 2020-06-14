@@ -15,7 +15,8 @@ namespace Dp1WpfApp.Converter
                 if (state.LogicState)
                 {
                     return new SolidColorBrush(Colors.Green);
-                } else
+                }
+                else
                 {
                     return new SolidColorBrush(Colors.Red);
                 }

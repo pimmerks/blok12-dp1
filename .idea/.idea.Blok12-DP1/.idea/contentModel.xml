@@ -29,6 +29,7 @@
           <e p="Circuit5_NotConnected.txt" t="Include" />
         </e>
         <e p="Converter" t="Include">
+          <e p="ListToStringConverter.cs" t="Include" />
           <e p="NodeToTypeConverter.cs" t="Include" />
           <e p="StateToColorConverter.cs" t="Include" />
         </e>
